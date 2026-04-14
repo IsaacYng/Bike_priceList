@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-white shadow-md fixed w-full z-10 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                
+                <div class="flex-shrink-0 flex items-center">
+                    <h1 class="text-2xl font-bold text-blue-600">LOGO</h1>
+                </div>
+
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Home</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Services</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Projects</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-600 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                        </svg>
+                    </button>
+
+                    <div class="relative">
+                        <button id="profile-btn" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-blue-500 transition">
+                            <img class="h-8 w-8 rounded-full bg-gray-300" src="https://ui-avatars.com/api/?name=User" alt="User Profile">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Home</a>
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Services</a>
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Projects</a>
+        </div>
+    </nav>
+
+    <div id="profile-drawer" class="fixed inset-y-0 right-0 w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-20 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold">User Account</h2>
+                <button id="close-drawer" class="text-gray-500">&times;</button>
+            </div>
+
+            <div id="auth-section" class="space-y-4">
+                <button class="w-full py-2 border flex items-center justify-center gap-2 rounded hover:bg-gray-50">
+                    <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Login with Google
+                </button>
+                <div class="text-center text-sm text-gray-500">OR</div>
+                <input type="email" placeholder="Email" class="w-full p-2 border rounded">
+                <input type="password" placeholder="Password" class="w-full p-2 border rounded">
+                <button class="w-full bg-blue-600 text-white py-2 rounded">Login / Create Account</button>
+            </div>
+
+            <hr class="my-6">
+
+            <div class="space-y-4">
+                <h3 class="font-semibold text-gray-700">Profile Information</h3>
+                <div class="text-sm space-y-2">
+                    <p><strong>Name:</strong> Ishak</p>
+                    <p><strong>DOB:</strong> 2000-01-01</p>
+                    <p><strong>Address:</strong> Phidim, Nepal</p>
+                    <p><strong>Contact:</strong> +977-98XXXXXXXX</p>
+                    <p><strong>Bio:</strong> Learning Laravel & Web Dev</p>
+                </div>
+                <button class="text-blue-600 text-sm font-medium hover:underline">Edit Profile</button>
+                <button class="block text-red-500 text-sm font-medium hover:underline">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" class="fixed inset-0 bg-black opacity-50 hidden z-15"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+                  
