@@ -1,8 +1,13 @@
-/* Custom styles if needed */
+/* Drawer slide-in from right */
 #profile-drawer {
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.z-15 {
-    z-index: 15;
+/* Custom Scrollbar for the Drawer */
+#profile-drawer::-webkit-scrollbar {
+    width: 4px;
+}
+#profile-drawer::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
 }
