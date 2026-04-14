@@ -3,86 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | Go! YNG</title>
+    <title>Responsive Firebase Auth Navbar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-100">
 
-    <nav class="bg-white shadow-md fixed w-full z-10 top-0">
+    <nav class="bg-white shadow-md fixed w-full z-20 top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 
-                <div class="flex-shrink-0 flex items-center">
-                    <h1 class="text-2xl font-bold text-blue-600">Go! YNG</h1>
-                </div>
-
-                <div class="hidden md:flex space-x-8">
-                    <a href="#" class="text-gray-700 hover:text-blue-600">Home</a>
-                    <a href="#" class="text-gray-700 hover:text-blue-600">Price List</a>
-                    <a href="#" class="text-gray-700 hover:text-blue-600">Finance</a>
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl font-bold text-blue-600 cursor-pointer">MYLOGO</h1>
                 </div>
 
                 <div class="flex items-center space-x-4">
-                    <button id="mobile-menu-btn" class="md:hidden text-gray-600 focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-600 focus:outline-none p-2">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 10a2 2 0 100 4 2 2 0 000-4zm0-7a2 2 0 100 4 2 2 0 000-4zm0 14a2 2 0 100 4 2 2 0 000-4z" />
                         </svg>
                     </button>
 
                     <div class="relative">
-                        <button id="profile-btn" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-blue-500 transition">
-                            <img class="h-8 w-8 rounded-full bg-gray-300" src="https://ui-avatars.com/api/?name=User" alt="User Profile">
+                        <button id="profile-btn" class="flex border-2 border-blue-500 rounded-full overflow-hidden focus:outline-none shadow-sm">
+                            <img id="nav-profile-preview" class="h-10 w-10 object-cover" src="https://via.placeholder.com/150" alt="Profile">
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Home</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Price List</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Finance</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 space-y-2">
+            <a href="#" class="block text-gray-700 font-medium hover:text-blue-600">Home</a>
+            <a href="#" class="block text-gray-700 font-medium hover:text-blue-600">Services</a>
+            <a href="#" class="block text-gray-700 font-medium hover:text-blue-600">Contact</a>
         </div>
     </nav>
 
-    <div id="profile-drawer" class="fixed inset-y-0 right-0 w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-20 overflow-y-auto">
+    <div id="profile-drawer" class="fixed inset-y-0 right-0 w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-30 overflow-y-auto">
         <div class="p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold">User Account</h2>
-                <button id="close-drawer" class="text-gray-500">&times;</button>
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h2 class="text-xl font-bold text-gray-800">My Profile</h2>
+                <button id="close-drawer" class="text-3xl text-gray-400 hover:text-black">&times;</button>
             </div>
 
-            <div id="auth-section" class="space-y-4">
-                <button class="w-full py-2 border flex items-center justify-center gap-2 rounded hover:bg-gray-50">
-                    <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Login with Google
-                </button>
-                <div class="text-center text-sm text-gray-500">OR</div>
-                <input type="email" placeholder="Email" class="w-full p-2 border rounded">
-                <input type="password" placeholder="Password" class="w-full p-2 border rounded">
-                <button class="w-full bg-blue-600 text-white py-2 rounded">Login / Create Account</button>
-            </div>
-
-            <hr class="my-6">
-
-            <div class="space-y-4">
-                <h3 class="font-semibold text-gray-700">Profile Information</h3>
-                <div class="text-sm space-y-2">
-                    <p><strong>Name:</strong> User</p>
-                    <p><strong>DOB:</strong> N/A</p>
-                    <p><strong>Address:</strong> N/A</p>
-                    <p><strong>Contact:</strong> +977-98XXXXXXXX</p>
-                    <p><strong>Bio:</strong> N/A</p>
+            <div class="flex flex-col items-center mb-6">
+                <div class="relative">
+                    <img id="drawer-profile-preview" class="w-24 h-24 rounded-full object-cover border-4 border-blue-50" src="https://via.placeholder.com/150">
+                    <label for="img-upload" class="absolute bottom-0 right-0 bg-blue-600 p-2 rounded-full text-white cursor-pointer hover:bg-blue-700 shadow-md">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </label>
+                    <input type="file" id="img-upload" class="hidden" accept="image/*">
                 </div>
-                <button class="text-blue-600 text-sm font-medium hover:underline">Edit Profile</button>
-                <button class="block text-red-500 text-sm font-medium hover:underline">Logout</button>
+            </div>
+
+            <div id="auth-section" class="space-y-3 mb-8">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Login / Join</p>
+                <button id="google-login-btn" class="w-full py-2 border flex items-center justify-center gap-2 rounded-lg hover:bg-gray-50 transition text-sm font-medium">
+                    <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Sign in with Google
+                </button>
+                <input type="email" id="email-field" placeholder="Email Address" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-200 outline-none">
+                <input type="password" id="pass-field" placeholder="Password" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-200 outline-none">
+                <button id="auth-action-btn" class="w-full bg-blue-600 text-white py-2.5 rounded-lg font-bold hover:bg-blue-700 transition">Login / Signup</button>
+            </div>
+
+            <div class="mt-8 space-y-4 border-t pt-6">
+                <h3 class="font-bold text-gray-800">Account Settings</h3>
+                
+                <div id="profile-display" class="text-sm text-gray-600 space-y-4">
+                    <div class="bg-gray-50 p-3 rounded-lg space-y-2">
+                        <p><b>Name:</b> <span id="disp-name">Guest User</span></p>
+                        <p><b>DOB:</b> <span id="disp-dob">N/A</span></p>
+                        <p><b>Address:</b> <span id="disp-address">N/A</span></p>
+                        <p><b>Bio:</b> <span id="disp-bio">No bio added.</span></p>
+                    </div>
+                    <button id="edit-profile-btn" class="w-full bg-blue-50 text-blue-600 py-2 rounded-lg font-bold hover:bg-blue-100 transition">Edit Profile</button>
+                </div>
+
+                <div id="profile-edit-form" class="hidden space-y-3">
+                    <input type="text" id="edit-name" class="w-full p-2 border rounded text-sm" placeholder="Full Name">
+                    <input type="date" id="edit-dob" class="w-full p-2 border rounded text-sm">
+                    <input type="text" id="edit-address" class="w-full p-2 border rounded text-sm" placeholder="Address">
+                    <textarea id="edit-bio" class="w-full p-2 border rounded text-sm h-20" placeholder="Write something about yourself..."></textarea>
+                    <div class="flex gap-2">
+                        <button id="save-profile-btn" class="flex-1 bg-green-600 text-white py-2 rounded-lg text-sm font-bold shadow-md">Save</button>
+                        <button id="cancel-edit-btn" class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm font-bold">Cancel</button>
+                    </div>
+                </div>
+
+                <button id="logout-btn" class="w-full bg-red-50 text-red-600 py-2.5 rounded-lg text-sm font-bold mt-4 hover:bg-red-100 transition">Sign Out</button>
             </div>
         </div>
     </div>
 
-    <div id="overlay" class="fixed inset-0 bg-black opacity-50 hidden z-15"></div>
+    <div id="overlay" class="fixed inset-0 bg-black/50 hidden z-20"></div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
-                  
