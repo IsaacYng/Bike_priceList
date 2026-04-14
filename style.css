@@ -1,0 +1,8 @@
+/* Custom styles if needed */
+#profile-drawer {
+    transition: transform 0.3s ease-in-out;
+}
+
+.z-15 {
+    z-index: 15;
+}
