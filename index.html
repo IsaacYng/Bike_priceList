@@ -3,249 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bike PriceList - Authentication</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        /* Drawer sliding animation - style.css बाट कपी गरिएको */
-        #profile-drawer {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Scrollbar styling for the drawer */
-        #profile-drawer::-webkit-scrollbar {
-            width: 5px;
-        }
-        #profile-drawer::-webkit-scrollbar-thumb {
-            background: #e2e8f0;
-            border-radius: 10px;
-        }
-    </style>
+    <title>Go! YNG</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
 </head>
-<body class="bg-gray-100">
-
-    <nav class="bg-white shadow-md fixed w-full z-20 top-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                
-                <div class="flex-shrink-0">
-                    <h1 class="text-2xl font-bold text-blue-600 cursor-pointer">Bike PriceList</h1>
-                </div>
-
-                <div class="flex items-center space-x-4">
-                    <button id="mobile-menu-btn" class="md:hidden text-gray-600 focus:outline-none p-2">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 10a2 2 0 100 4 2 2 0 000-4zm0-7a2 2 0 100 4 2 2 0 000-4zm0 14a2 2 0 100 4 2 2 0 000-4z" />
-                        </svg>
-                    </button>
-
-                    <div class="relative">
-                        <button id="profile-btn" class="flex border-2 border-blue-500 rounded-full overflow-hidden focus:outline-none shadow-sm">
-                            <img id="nav-profile-preview" class="h-10 w-10 object-cover" src="https://via.placeholder.com/150" alt="Profile">
-                        </button>
-                    </div>
-                </div>
+<body>
+    <section class="intro-section">
+        <div class="main_containor">
+            <img src="favicon.png" alt="logo" class="logo-img">
+            <div class="brand-text">
+                <span class="title_1">Go!</span>
+                <span class="title_2">YNG</span>
+            </div>
+            <div class="greeting-box">
+                <p id="dynamic-greeting">Namaste!</p>
+            </div>
+            <div class="progress-container">
+                <progress id="login-progress" value="0" max="100"></progress>
             </div>
         </div>
-
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 space-y-2">
-            <a href="#" class="block text-gray-700 font-medium hover:text-blue-600">Home</a>
-            <a href="#" class="block text-gray-700 font-medium hover:text-blue-600">Bike List</a>
-            <a href="#" class="block text-gray-700 font-medium hover:text-blue-600">About Us</a>
-        </div>
-    </nav>
-
-    <div id="profile-drawer" class="fixed inset-y-0 right-0 w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-30 overflow-y-auto">
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-6 border-b pb-4">
-                <h2 class="text-xl font-bold text-gray-800">My Account</h2>
-                <button id="close-drawer" class="text-3xl text-gray-400 hover:text-black">&times;</button>
-            </div>
-
-            <div class="flex flex-col items-center mb-6">
-                <div class="relative">
-                    <img id="drawer-profile-preview" class="w-24 h-24 rounded-full object-cover border-4 border-blue-100" src="https://via.placeholder.com/150">
-                    <label for="img-upload" class="absolute bottom-0 right-0 bg-blue-600 p-2 rounded-full text-white cursor-pointer hover:bg-blue-700 shadow-md">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    </label>
-                    <input type="file" id="img-upload" class="hidden" accept="image/*">
-                </div>
-            </div>
-
-            <div id="auth-section" class="space-y-3 mb-8 bg-gray-50 p-4 rounded-xl">
-                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Sign In / Join</p>
-                <button id="google-login-btn" class="w-full py-2 border flex items-center justify-center gap-2 rounded-lg hover:bg-white transition text-sm font-medium shadow-sm">
-                    <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Login with Google
-                </button>
-                <input type="email" id="email-field" placeholder="Email" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-200 outline-none">
-                <input type="password" id="pass-field" placeholder="Password" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-200 outline-none">
-                <button id="auth-action-btn" class="w-full bg-blue-600 text-white py-2.5 rounded-lg font-bold hover:bg-blue-700 transition shadow-md">Login / Signup</button>
-            </div>
-
-            <div class="mt-8 space-y-4 border-t pt-6">
-                <h3 class="font-bold text-gray-800">Account Details</h3>
-                
-                <div id="profile-display" class="text-sm text-gray-600 space-y-4 bg-gray-50 p-4 rounded-xl">
-                    <p><b>Name:</b> <span id="disp-name">Guest User</span></p>
-                    <p><b>DOB:</b> <span id="disp-dob">N/A</span></p>
-                    <p><b>Address:</b> <span id="disp-address">N/A</span></p>
-                    <p><b>Bio:</b> <span id="disp-bio">No bio added.</span></p>
-                    <button id="edit-profile-btn" class="w-full mt-2 bg-blue-100 text-blue-600 py-2 rounded-lg font-bold hover:bg-blue-200 transition">Edit Profile</button>
-                </div>
-
-                <div id="profile-edit-form" class="hidden space-y-3 bg-white p-4 rounded-xl shadow-inner border">
-                    <input type="text" id="edit-name" class="w-full p-2 border rounded text-sm" placeholder="Full Name">
-                    <input type="date" id="edit-dob" class="w-full p-2 border rounded text-sm">
-                    <input type="text" id="edit-address" class="w-full p-2 border rounded text-sm" placeholder="Address">
-                    <textarea id="edit-bio" class="w-full p-2 border rounded text-sm h-20" placeholder="Short Bio..."></textarea>
-                    <div class="flex gap-2">
-                        <button id="save-profile-btn" class="flex-1 bg-green-600 text-white py-2 rounded-lg text-sm font-bold shadow-md">Save</button>
-                        <button id="cancel-edit-btn" class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm font-bold">Cancel</button>
-                    </div>
-                </div>
-
-                <button id="logout-btn" class="w-full bg-red-50 text-red-600 py-2.5 rounded-lg text-sm font-bold mt-4 hover:bg-red-100 transition shadow-sm">Logout</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="overlay" class="fixed inset-0 bg-black/50 hidden z-20"></div>
-
-    <script type="module">
-        // १. Firebase Import (CDN मार्फत, type="module" चाहिन्छ)
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        // २. Firebase Config - आफ्नो Firebase Console बाट कपी गरेर यहाँ पेस्ट गर्नुहोस्
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY", // <--- यहाँ आफ्नो API Key हाल्नुहोस्
-            authDomain: "bike-pricelist.firebaseapp.com",
-            projectId: "bike-pricelist",
-            storageBucket: "bike-pricelist.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID", // <--- यहाँ आफ्नो Sender ID हाल्नुहोस्
-            appId: "YOUR_APP_ID" // <--- यहाँ आफ्नो App ID हाल्नुहोस्
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const googleProvider = new GoogleAuthProvider();
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // UI Elements Selection
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const profileBtn = document.getElementById('profile-btn');
-            const profileDrawer = document.getElementById('profile-drawer');
-            const closeDrawer = document.getElementById('close-drawer');
-            const overlay = document.getElementById('overlay');
-            
-            const emailField = document.getElementById('email-field');
-            const passField = document.getElementById('pass-field');
-            const authActionBtn = document.getElementById('auth-action-btn');
-            const googleLoginBtn = document.getElementById('google-login-btn');
-            const logoutBtn = document.getElementById('logout-btn');
-
-            const editBtn = document.getElementById('edit-profile-btn');
-            const saveBtn = document.getElementById('save-profile-btn');
-            const cancelBtn = document.getElementById('cancel-edit-btn');
-            const displayDiv = document.getElementById('profile-display');
-            const editDiv = document.getElementById('profile-edit-form');
-
-            // ३. Drawer र Menu Controls (Open/Close)
-            profileBtn.onclick = () => {
-                profileDrawer.classList.remove('translate-x-full');
-                overlay.classList.remove('hidden');
-            };
-
-            const closeAll = () => {
-                profileDrawer.classList.add('translate-x-full');
-                overlay.classList.add('hidden');
-                mobileMenu.classList.add('hidden');
-            };
-
-            closeDrawer.onclick = closeAll;
-            overlay.onclick = closeAll;
-            mobileMenuBtn.onclick = () => mobileMenu.classList.toggle('hidden');
-
-            // ४. Firebase Auth Logic (Login/Signup/Logout)
-            // Google Login
-            googleLoginBtn.onclick = async () => {
-                try {
-                    await signInWithPopup(auth, googleProvider);
-                    alert("Google बाट लगइन सफल भयो!");
-                } catch (e) { alert("Error: " + e.message); }
-            };
-
-            // Email/Password Signup (अथवा Login)
-            authActionBtn.onclick = async () => {
-                const email = emailField.value;
-                const password = passField.value;
-                if (!email || !password) { alert("Email र Password हाल्नुहोस्।"); return; }
-
-                try {
-                    // अकाउन्ट बनाउने प्रयास गर्ने
-                    await createUserWithEmailAndPassword(auth, email, password);
-                    alert("अकाउन्ट बन्यो!");
-                } catch (e) {
-                    // यदि अकाउन्ट पहिले नै छ भने लगइन गर्ने प्रयास गर्ने
-                    try {
-                        await signInWithEmailAndPassword(auth, email, password);
-                        alert("लगइन सफल!");
-                    } catch (err) { alert("Error: " + err.message); }
-                }
-            };
-
-            // Sign Out
-            logoutBtn.onclick = () => {
-                signOut(auth).then(() => {
-                    alert("Logout भयो!");
-                }).catch((e) => alert(e.message));
-            };
-
-            // ५. Auth State Check (लगइन छ कि छैन हेर्ने)
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    // लगइन भएको अवस्थामा: विवरण देखाउने
-                    document.getElementById('disp-name').innerText = user.displayName || user.email;
-                    if (user.photoURL) {
-                        document.getElementById('nav-profile-preview').src = user.photoURL;
-                        document.getElementById('drawer-profile-preview').src = user.photoURL;
-                    }
-                    // Login Form लुकाउने
-                    document.getElementById('auth-section').classList.add('hidden');
-                } else {
-                    // लगइन नभएको अवस्थामा: विवरण लुकाउने, Form देखाउने
-                    document.getElementById('auth-section').classList.remove('hidden');
-                    document.getElementById('disp-name').innerText = "Guest User";
-                    document.getElementById('nav-profile-preview').src = "https://via.placeholder.com/150";
-                    document.getElementById('drawer-profile-preview').src = "https://via.placeholder.com/150";
-                }
-            });
-
-            // ६. Edit Profile Logic (ब्राउजरमा मात्र अपडेट हुन्छ, Database मा होइन)
-            editBtn.onclick = () => {
-                displayDiv.classList.add('hidden');
-                editDiv.classList.remove('hidden');
-                document.getElementById('edit-name').value = document.getElementById('disp-name').innerText;
-                document.getElementById('edit-dob').value = document.getElementById('disp-dob').innerText;
-                document.getElementById('edit-address').value = document.getElementById('disp-address').innerText;
-                document.getElementById('edit-bio').value = document.getElementById('disp-bio').innerText;
-            };
-
-            saveBtn.onclick = () => {
-                document.getElementById('disp-name').innerText = document.getElementById('edit-name').value;
-                document.getElementById('disp-dob').innerText = document.getElementById('edit-dob').value;
-                document.getElementById('disp-address').innerText = document.getElementById('edit-address').value;
-                document.getElementById('disp-bio').innerText = document.getElementById('edit-bio').value;
-                displayDiv.classList.remove('hidden');
-                editDiv.classList.add('hidden');
-            };
-
-            cancelBtn.onclick = () => {
-                displayDiv.classList.remove('hidden');
-                editDiv.classList.add('hidden');
-            };
-        });
-    </script>
+    </section>
+    <script src="script.js"></script>
 </body>
 </html>
