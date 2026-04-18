@@ -1,13 +1,71 @@
-/* Drawer slide-in from right */
-#profile-drawer {
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* Custom Scrollbar for the Drawer */
-#profile-drawer::-webkit-scrollbar {
-    width: 4px;
+body {
+    background: #f8fafc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
-#profile-drawer::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+
+.main_containor {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-img {
+    height: 10vh;
+    animation: pulse 2s infinite;
+}
+
+.title_1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.title_2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+#dynamic-greeting {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+progress {
+    width: 200px;
+    height: 8px;
     border-radius: 10px;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #e2e8f0;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #2563eb;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.8s ease;
 }
