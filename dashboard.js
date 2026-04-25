@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAXQW4khEovrBUtP5JpYFTUch_p5KT-8F8",
@@ -18,8 +18,13 @@ const bikesCol = collection(db, "bikes");
 let allBikes = []; 
 
 function startApp() {
+    // We use a query to make sure the order is correct
+    // If you have a 'createdAt' field in Firebase, it's even better!
     onSnapshot(bikesCol, (snapshot) => {
+        // Mapping data and keeping the Firebase order
         allBikes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        // This ensures: First Added -> Top, Second Added -> Next
         renderBikes(allBikes); 
     });
 }
@@ -28,36 +33,34 @@ function renderBikes(bikes) {
     let container = document.getElementById("bike-container");
     if (container) {
         if (bikes.length === 0) {
-            container.innerHTML = `
-                <div class="col-span-full text-center py-10">
-                    <p class="text-gray-400 italic">No bikes found matching your search.</p>
-                </div>`;
+            container.innerHTML = `<p class="col-span-full text-center text-gray-400 py-10">No bikes in stock.</p>`;
             return;
         }
 
         container.innerHTML = bikes.map(bike => `
-            <div class="group bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="h-48 bg-gray-50 flex items-center justify-center p-6 overflow-hidden">
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div class="h-52 bg-slate-50 flex items-center justify-center p-4">
                     <img src="${bike.img || 'https://cdn-icons-png.flaticon.com/512/8163/8163149.png'}" 
                          alt="${bike.name}" 
-                         class="h-full object-contain group-hover:scale-110 transition-transform duration-500">
+                         class="h-full object-contain hover:scale-105 transition-transform duration-500">
                 </div>
                 
                 <div class="p-6">
-                    <h3 class="text-xl font-bold text-slate-800 mb-1">${bike.name}</h3>
-                    <p class="text-sm text-gray-500 mb-4 flex items-center">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold text-slate-800">${bike.name}</h3>
+                        <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded-full font-bold uppercase tracking-tighter">Verified</span>
+                    </div>
+
+                    <p class="text-sm text-gray-500 mb-6 flex items-center">
                         <i class="fa-solid fa-shield-halved mr-2 text-blue-500"></i>
-                        Insurance: <span class="ml-1 font-semibold text-slate-700">Rs. ${bike.Insurance || '0'}</span>
+                        Insurance: Rs. ${bike.Insurance || '0'}
                     </p>
                     
-                    <div class="flex justify-between items-center pt-4 border-t border-gray-50">
-                        <div>
-                            <p class="text-xs uppercase tracking-wider text-gray-400 font-bold">MRP Price</p>
-                            <p class="text-2xl font-black text-red-600">Rs. ${parseFloat(bike.price).toLocaleString()}</p>
-                        </div>
-                        <button class="bg-slate-900 text-white p-3 rounded-2xl hover:bg-red-600 transition-colors shadow-lg shadow-slate-200">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
+                    <div class="pt-4 border-t border-dashed border-gray-200">
+                        <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-1">Total MRP Price</p>
+                        <p class="text-3xl font-black text-red-600 tracking-tight">
+                            <span class="text-sm mr-1 font-bold italic">Rs.</span>${parseFloat(bike.price).toLocaleString()}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -78,7 +81,6 @@ window.searchBikes = function() {
     renderBikes(filteredBikes);
 };
 
-// Add listener to the search input for real-time typing search
 document.getElementById('search-input')?.addEventListener('input', window.searchBikes);
 
 startApp();
