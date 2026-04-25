@@ -13,13 +13,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let currentEditId = null; // Edit मोडको लागि ID ट्र्याक गर्न
-let allMasterBikes = []; // मास्टर प्राइस स्टोर गर्न
+let currentEditId = null; 
+let allMasterBikes = []; 
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         document.getElementById('login-section').style.display = 'none';
-        document.getElementById('admin-section').style.display = 'block';
+        document.getElementById('admin-section').style.display = 'flex';
         loadProfile(user.uid);
         loadMasterPriceList();
         loadLiveStock();
@@ -29,7 +29,7 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-// --- १. MASTER PRICE SETUP (EDIT सहित) ---
+// --- 1. MASTER PRICE SETUP ---
 function loadMasterPriceList() {
     onSnapshot(collection(db, "bikes"), (snap) => {
         allMasterBikes = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -41,15 +41,19 @@ function loadMasterPriceList() {
 
         allMasterBikes.forEach(b => {
             rows += `
-                <tr>
-                    <td><img src="${b.img || 'favicon.png'}" class="master-img-view" style="width:40px; border-radius:4px;"></td>
-                    <td><b>${b.name}</b></td>
-                    <td>Rs. ${Number(b.price).toLocaleString()}</td>
-                    <td>Rs. ${Number(b.Insurance || 0).toLocaleString()}</td>
-                    <td>Rs. ${Number(b.financeInsurance || 0).toLocaleString()}</td>
-                    <td>
-                        <button onclick="editMaster('${b.id}')" style="color:blue; background:none; border:none; cursor:pointer; margin-right:10px;"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteEntry('bikes', '${b.id}')" style="color:red; background:none; border:none; cursor:pointer;"><i class="fa fa-trash"></i></button>
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-8 py-4">
+                        <div class="flex items-center gap-4">
+                            <img src="${b.img || 'favicon.png'}" class="w-12 h-10 object-cover rounded-lg bg-slate-100 border border-slate-200 shadow-sm">
+                            <span class="font-bold text-slate-800">${b.name}</span>
+                        </div>
+                    </td>
+                    <td class="px-8 py-4 font-semibold text-slate-700 font-mono">Rs. ${Number(b.price).toLocaleString()}</td>
+                    <td class="px-8 py-4 text-slate-500 font-mono">Rs. ${Number(b.Insurance || 0).toLocaleString()}</td>
+                    <td class="px-8 py-4 text-slate-500 font-mono">Rs. ${Number(b.financeInsurance || 0).toLocaleString()}</td>
+                    <td class="px-8 py-4 text-right">
+                        <button onclick="editMaster('${b.id}')" class="p-2 text-indigo-500 hover:bg-indigo-50 rounded-lg transition-all mr-2"><i class="fa fa-edit"></i></button>
+                        <button onclick="deleteEntry('bikes', '${b.id}')" class="p-2 text-red-400 hover:bg-red-50 rounded-lg transition-all"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>`;
             options += `<option value="${b.name}">${b.name}</option>`;
@@ -59,7 +63,6 @@ function loadMasterPriceList() {
     });
 }
 
-// मास्टर डाटालाई एडिट मोडमा ल्याउने
 window.editMaster = (id) => {
     const bike = allMasterBikes.find(b => b.id === id);
     if(bike) {
@@ -69,8 +72,9 @@ window.editMaster = (id) => {
         document.getElementById('mFinanceIns').value = bike.financeInsurance || 0;
         document.getElementById('mImg').value = bike.img || "";
         currentEditId = id;
-        document.getElementById('saveModelBtn').innerText = "Update Model";
-        switchTab('tab-price'); // ट्याबमा लैजाने
+        document.getElementById('saveModelBtn').innerText = "Update Model Info";
+        document.getElementById('saveModelBtn').classList.replace('bg-slate-900', 'bg-indigo-600');
+        switchTab('tab-price'); 
     }
 };
 
@@ -83,31 +87,27 @@ document.getElementById('saveModelBtn').onclick = async () => {
         img: document.getElementById('mImg').value
     };
 
-    if(currentEditId) {
-        await updateDoc(doc(db, "bikes", currentEditId), data);
-        currentEditId = null;
-        document.getElementById('saveModelBtn').innerText = "Save to Master List";
-    } else {
-        await addDoc(collection(db, "bikes"), data);
-    }
-    alert("Data Processed!");
-    clearMasterForm();
+    if(!data.name || !data.price) return alert("Please enter at least Name and Price!");
+
+    try {
+        if(currentEditId) {
+            await updateDoc(doc(db, "bikes", currentEditId), data);
+            currentEditId = null;
+            document.getElementById('saveModelBtn').innerText = "Save to Master List";
+            document.getElementById('saveModelBtn').classList.replace('bg-indigo-600', 'bg-slate-900');
+        } else {
+            await addDoc(collection(db, "bikes"), data);
+        }
+        alert("Operation Successful!");
+        clearMasterForm();
+    } catch(e) { alert(e.message); }
 };
 
 function clearMasterForm() {
     ['mName', 'mPrice', 'mNormalIns', 'mFinanceIns', 'mImg'].forEach(id => document.getElementById(id).value = "");
 }
 
-// --- २. LIVE STOCK (AUTO PRICE LOGIC) ---
-
-// मोडल छान्ने बित्तिकै प्राइस आफैँ सेट हुने
-document.getElementById('stockModelSelect').onchange = (e) => {
-    const selectedModel = e.target.value;
-    const bikeData = allMasterBikes.find(b => b.name === selectedModel);
-    // तपाईँको HTML मा "Live Stock" ट्याब भित्र प्राइस देखाउने वा लुकेको इनपुट छ भने यहाँ हाल्न सकिन्छ।
-    // तत्कालको लागि सेभ गर्दा हामी सिधै मास्टर लिस्टबाट प्राइस लिन्छौँ।
-};
-
+// --- 2. LIVE STOCK ---
 document.getElementById('saveStockBtn').onclick = async () => {
     const modelName = document.getElementById('stockModelSelect').value;
     const bikeInfo = allMasterBikes.find(b => b.name === modelName);
@@ -116,14 +116,15 @@ document.getElementById('saveStockBtn').onclick = async () => {
 
     await addDoc(collection(db, "inventory"), {
         model: modelName,
-        price: bikeInfo.price, // मास्टर डाटाबाट अटोमेटिक प्राइस लियो
+        price: bikeInfo.price, 
         regNo: document.getElementById('sRegNo').value,
         chassis: document.getElementById('sChassis').value,
         engine: document.getElementById('sEngine').value,
         color: document.getElementById('sColor').value,
         addedAt: new Date()
     });
-    alert("Stock Added with Auto-Price!");
+    alert("Stock Added!");
+    ['sRegNo', 'sChassis', 'sEngine', 'sColor'].forEach(id => document.getElementById(id).value = "");
 };
 
 function loadLiveStock() {
@@ -133,15 +134,19 @@ function loadLiveStock() {
         snap.docs.forEach(d => {
             const s = d.data();
             rows += `
-                <tr>
-                    <td>${s.model}</td>
-                    <td>Rs. ${Number(s.price).toLocaleString()}</td>
-                    <td>${s.chassis}</td>
-                    <td>${s.engine}</td>
-                    <td>${s.regNo}</td>
-                    <td>${s.color}</td>
-                    <td>
-                        <button onclick="deleteEntry('inventory', '${d.id}')" style="color:red; background:none; border:none; cursor:pointer;"><i class="fa fa-trash"></i></button>
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-8 py-5">
+                        <div class="font-bold text-slate-800">${s.model}</div>
+                        <div class="text-[11px] text-indigo-600 font-bold uppercase tracking-wider">Rs. ${Number(s.price).toLocaleString()}</div>
+                    </td>
+                    <td class="px-8 py-5 font-mono text-xs">${s.chassis}</td>
+                    <td class="px-8 py-5 font-mono text-xs text-slate-500">${s.engine}</td>
+                    <td class="px-8 py-5 font-semibold text-slate-700">${s.regNo || 'N/A'}</td>
+                    <td class="px-8 py-5">
+                        <span class="px-3 py-1 bg-slate-100 rounded-full text-[11px] font-bold text-slate-600 border border-slate-200">${s.color}</span>
+                    </td>
+                    <td class="px-8 py-5 text-right">
+                        <button onclick="deleteEntry('inventory', '${d.id}')" class="h-9 w-9 text-red-400 hover:bg-red-50 rounded-xl transition-all"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>`;
         });
@@ -149,22 +154,25 @@ function loadLiveStock() {
     });
 }
 
-// --- ३. GLOBAL FUNCTIONS ---
+// --- 3. GLOBAL FUNCTIONS ---
 window.deleteEntry = async (col, id) => {
-    if(confirm("Delete this?")) await deleteDoc(doc(db, col, id));
+    if(confirm("Are you sure you want to delete this permanently?")) {
+        await deleteDoc(doc(db, col, id));
+    }
 };
 
-// Profile, Login, Logout (तपाईँको अघिल्लो कोड जस्तै)
 async function loadProfile(uid) {
-    const docSnap = await getDoc(doc(db, "profiles", uid));
-    if (docSnap.exists()) {
-        const d = docSnap.data();
-        document.getElementById('dispName').innerText = d.name || "Admin";
-        document.getElementById('pNameInput').value = d.name || "";
-        document.getElementById('dispRole').innerText = d.role || "Sales Advisor";
-    }
+    try {
+        const docSnap = await getDoc(doc(db, "profiles", uid));
+        if (docSnap.exists()) {
+            const d = docSnap.data();
+            document.getElementById('headerUserName').innerText = d.name || "Admin";
+            document.getElementById('dispRole').innerText = d.role || "Sales Advisor";
+        }
+    } catch(e) { console.error("Profile load error", e); }
 }
+
 document.getElementById('logoutBtn').onclick = () => signOut(auth);
 document.getElementById('loginBtn').onclick = () => {
-    signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('pass').value).catch(alert);
+    signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('pass').value).catch(err => alert("Login Failed: " + err.message));
 };
