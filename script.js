@@ -22,13 +22,13 @@ async function fetchBikes() {
     try {
         const snapshot = await getDocs(bikesCol);
         allBikes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        
+
         const select = document.getElementById('modelSelect');
         if (select) {
             select.innerHTML = allBikes.map(bike => 
                 `<option value="${bike.id}" ${bike.name.includes("Pulsar 150 SD BS VI") ? "selected" : ""}>${bike.name}</option>`
             ).join('');
-            
+
             // सुरुमै हिसाब देखाउनको लागि
             calculateFinance();
         }
@@ -37,11 +37,11 @@ async function fetchBikes() {
     }
 }
 
-// ३. मुख्य हिसाब गर्ने फङ्सन (The Calculator Logic)
+// ३. मुख्य हिसाब गर्ने फङ्सन
 window.calculateFinance = function() {
     const selectedId = document.getElementById('modelSelect').value;
     const bike = allBikes.find(b => b.id === selectedId);
-    
+
     if (!bike) return;
 
     // --- डाटाहरू नम्बरमा बदल्ने ---
@@ -50,7 +50,7 @@ window.calculateFinance = function() {
     const discount = parseFloat(document.getElementById('discountInput').value) || 0;
     const customerExtraAdv = parseFloat(document.getElementById('advEmiInput').value) || 0; 
     const namsari = parseFloat(document.getElementById('namsariInput').value) || 3000;
-    
+
     const accCost = (parseFloat(document.getElementById('helmetInput').value) || 0) + 
                      (parseFloat(document.getElementById('legguardInput').value) || 0) + 
                      (parseFloat(document.getElementById('seatcoverInput').value) || 0) + 
@@ -71,49 +71,47 @@ window.calculateFinance = function() {
     else if (dpPercentVal >= 40) rate = 12.99;
 
     const monthlyRate = (rate / 12) / 100;
-    const emi = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, tenure)) / (Math.pow(1 + monthlyRate, tenure) - 1);
+    
+    // यहाँ EMI लाई Math.ceil प्रयोग गरेर सिधै राउन्ड अप गरिएको छ (उदा: १२३.०१ -> १२४)
+    const rawEmi = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, tenure)) / (Math.pow(1 + monthlyRate, tenure) - 1);
+    const emi = Math.ceil(rawEmi);
 
     // --- २. "Total Downpayment" को राउन्डिङ लजिक ---
-    // सबै खर्च जोड्ने (DP + Namsari + Insurance + १ महिनाको EMI + Accessories + Extra)
     const rawTotalDownpayment = dpAmountOnly + namsari + insurance + emi + accCost + customerExtraAdv;
 
-    // जस्तै: १२३४५६.७८ आयो भने, यसलाई अर्को १००० (१२४०००) पुर्याउन कति थप्ने?
+    // अर्को १००० को राउन्ड फिगर बनाउन (उदा: १२३४५६ -> १२४०००)
     const lastThreeDigits = Math.ceil(rawTotalDownpayment) % 1000;
     const autoRounding = lastThreeDigits > 0 ? (1000 - lastThreeDigits) : 0;
 
-    // अन्तिममा ग्राहकले शोरुममा तिर्ने राउन्ड फिगर (उदा: १,२४,०००)
     const finalTotalDP = Math.ceil(rawTotalDownpayment) + autoRounding;
 
     // --- ३. Advance EMI र Due EMI को हिसाब ---
-    // Total Advance EMI = १ महिनाको EMI + राउन्ड गर्दा थपिएको पैसा + ग्राहकले थपेको एक्स्ट्रा
     const totalAdvEmiIncludingAdjustment = emi + autoRounding + customerExtraAdv;
-
-    // Due EMI = (EMI * जम्मा महिना) - तिरिसकेको एडभान्स रकम
     const totalRemainingToPay = (emi * tenure) - totalAdvEmiIncludingAdjustment;
 
     // --- ४. स्क्रिनमा नतिजा देखाउने (UI Update) ---
-    
-    // माथिको मुख्य पहेँलो रङको Total Downpayment
+
+    // माथिको मुख्य Total Downpayment
     document.getElementById('displayTotalDP').innerText = `RS. ${finalTotalDP.toLocaleString()}`;
-    
+
     // बाइकको जानकारी
     document.getElementById('mrp').innerText = `RS. ${mrp.toLocaleString()}`;
     document.getElementById('afterDiscount').innerText = `RS. ${afterDiscount.toLocaleString()}`;
     document.getElementById('displayIns').innerText = `RS. ${insurance.toLocaleString()}`;
-    
+
     // क्यालकुलेसन समरी (Results)
     document.getElementById('displayRate').innerText = `${rate}%`;
     document.getElementById('displayDpAmt').innerText = `RS. ${Math.round(dpAmountOnly).toLocaleString()}`;
     document.getElementById('displayLoanAmt').innerText = `RS. ${Math.round(loanAmount).toLocaleString()}`;
-    
-    // EMI (दशमलवमा: १२३४५.८९)
-    document.getElementById('displayEMI').innerText = `RS. ${emi.toFixed(2)}`;
-    
+
+    // EMI (अहिले यो सिधै राउन्ड अप भएको सिङ्गो नम्बरमा आउँछ)
+    document.getElementById('displayEMI').innerText = `RS. ${emi.toLocaleString()}`;
+
     // राउन्डिङ र एडभान्स विवरण
     document.getElementById('displayAutoAdEmi').innerText = `RS. ${autoRounding.toLocaleString()}`;
     document.getElementById('displayTotalAdvEmi').innerText = `RS. ${Math.round(totalAdvEmiIncludingAdjustment).toLocaleString()}`;
     document.getElementById('displayDueEmi').innerText = `RS. ${Math.round(totalRemainingToPay).toLocaleString()}`;
-    
+
     // जम्मा ब्याज
     const totalInterest = (emi * tenure) - loanAmount;
     document.getElementById('displayTotalInterest').innerText = `RS. ${Math.round(totalInterest).toLocaleString()}`;
