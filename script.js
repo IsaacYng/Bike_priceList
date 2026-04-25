@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 document.body.classList.add('fade-out');
                 setTimeout(() => {
-                    window.location.href = '#';
+                    window.location.href = 'dashboard.html';
                 }, 800);
             }, 500);
         } else {
