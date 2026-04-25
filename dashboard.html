@@ -65,18 +65,36 @@
                 <div class="h-1 w-20 bg-red-600 mt-2"></div>
             </div>
         </div>
-    <section id="Price_list" class="price_section">
-        <h2 class="section_title">Price List</h2>
+    <section id="Price_list" class="py-16 px-4 max-w-7xl mx-auto">
+    <div class="mb-10">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-800 relative inline-block">
+            Price List
+            <span class="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"></span>
+        </h2>
+    </div>
 
-        <div class="search-box-wrapper">
+    <div class="mb-12 relative max-w-md group">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-red-500 transition-colors">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="search-input" placeholder="Search bikes here...">
         </div>
+        <input 
+            type="text" 
+            id="search-input" 
+            placeholder="Search bikes here..." 
+            class="w-full bg-white border border-gray-200 rounded-2xl py-4 pl-12 pr-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all placeholder:text-gray-400 text-slate-700"
+        >
+    </div>
 
-        <div id="bike-container" class="bike-grid">
-            <p class="loading-text">Connecting to database...</p>
+    <div id="bike-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="col-span-full py-20 text-center">
+            <div class="inline-block animate-bounce mb-4 text-red-600">
+                <i class="fa-solid fa-database text-3xl"></i>
+            </div>
+            <p class="text-gray-500 font-medium tracking-wide animate-pulse">Connecting to database...</p>
         </div>
-    </section>
+    </div>
+</section>
+
           </div>
         </div>
     </main>
