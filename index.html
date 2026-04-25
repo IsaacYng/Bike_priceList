@@ -1,221 +1,232 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-slate-50">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Go! YNG - Admin Suite</title>
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="login.css">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-active { @apply border-indigo-600 text-indigo-600 border-b-2; }
+    </style>
 </head>
-<body>
+<body class="h-full">
 
-<!-- LOGIN SECTION -->
-<section id="login-section">
-    <div class="login-card">
-        <div class="logo-area">
-            <img src="favicon.png" alt="Go YNG"
-                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/8163/8163149.png'">
-            <h2>Admin Login</h2>
-            <p>Manage your inventory & finance</p>
+<section id="login-section" class="flex min-h-full items-center justify-center p-6">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-100 p-8">
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-indigo-50 mb-4">
+                <img src="favicon.png" class="w-10 h-10 object-contain" 
+                     onerror="this.src='https://cdn-icons-png.flaticon.com/512/8163/8163149.png'">
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800">Admin Login</h2>
+            <p class="text-slate-500 text-sm mt-1">Manage your inventory & finance</p>
         </div>
 
-        <div class="input-group">
-            <div class="field">
-                <i class="fa fa-envelope"></i>
-                <input type="email" id="email" placeholder="Email Address">
+        <div class="space-y-4">
+            <div class="relative">
+                <i class="fa fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="email" id="email" placeholder="Email Address" 
+                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
             </div>
 
-            <div class="field">
-                <i class="fa fa-lock"></i>
-                <input type="password" id="pass" placeholder="Password">
+            <div class="relative">
+                <i class="fa fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="password" id="pass" placeholder="Password"
+                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
             </div>
         </div>
 
-        <button id="loginBtn" class="btn-primary">
-            Sign In <i class="fa fa-arrow-right"></i>
+        <button id="loginBtn" class="w-full mt-8 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg shadow-md transition-all flex items-center justify-center gap-2">
+            Sign In <i class="fa fa-arrow-right text-xs"></i>
         </button>
 
-        <div class="divider"><span>OR</span></div>
-
-        <div class="social-login">
-            <button id="googleBtn" class="btn-social">
-                <img src="https://img.icons8.com/color/24/000000/google-logo.png">
-                Google
-            </button>
+        <div class="relative my-8">
+            <div class="absolute inset-0 flex items-center"><span class="w-full border-t border-slate-200"></span></div>
+            <div class="relative flex justify-center text-xs uppercase"><span class="bg-white px-2 text-slate-400 font-medium">Or continue with</span></div>
         </div>
+
+        <button id="googleBtn" class="w-full flex items-center justify-center gap-3 border border-slate-200 py-3 rounded-lg hover:bg-slate-50 transition-all font-medium text-slate-700">
+            <img src="https://img.icons8.com/color/24/000000/google-logo.png" class="w-5 h-5">
+            Google Account
+        </button>
     </div>
 </section>
 
 
-<!-- ADMIN SECTION -->
-<section id="admin-section" style="display:none;">
+<section id="admin-section" class="hidden min-h-screen flex flex-col">
 
-    <!-- HEADER -->
-    <header class="admin-header">
-        <div class="greeting">
-            <h3 id="greetingText">Welcome Back!</h3>
-            <p id="currentDate"></p>
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+        <div>
+            <h3 id="greetingText" class="text-lg font-bold text-slate-800">Welcome Back!</h3>
+            <p id="currentDate" class="text-xs text-slate-500 font-medium"></p>
         </div>
 
-        <div class="header-right">
-            <span id="headerUserName"></span>
-            <button id="logoutBtn" class="btn-danger-icon">
+        <div class="flex items-center gap-4">
+            <span id="headerUserName" class="text-sm font-semibold text-slate-700 bg-slate-100 px-3 py-1 rounded-full">Admin</span>
+            <button id="logoutBtn" class="h-10 w-10 flex items-center justify-center rounded-full bg-red-50 text-red-600 hover:bg-red-100 transition-colors">
                 <i class="fa fa-power-off"></i>
             </button>
         </div>
     </header>
 
 
-    <!-- NAVIGATION -->
-    <div class="nav-bar" style="padding:10px 20px;">
-        <button class="nav-item active" onclick="switchTab('tab-price')">Price Setup</button>
-        <button class="nav-item" onclick="switchTab('tab-stock')">Stock</button>
-    </div>
+    <nav class="bg-white px-6 flex gap-8 border-b border-slate-200">
+        <button class="nav-item tab-active py-4 text-sm font-bold transition-all" onclick="switchTab(this, 'tab-price')">Price Setup</button>
+        <button class="nav-item py-4 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-all" onclick="switchTab(this, 'tab-stock')">Stock Management</button>
+    </nav>
 
 
-    <main class="content">
+    <main class="p-6 max-w-7xl mx-auto w-full space-y-8">
 
-        <!-- PRICE TAB -->
-        <div id="tab-price" class="tab-pane active">
-            <div class="card">
-                <h3><i class="fa fa-cog"></i> Master Price Setup</h3>
+        <div id="tab-price" class="tab-pane block space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                    <i class="fa fa-cog text-indigo-500"></i> Master Price Setup
+                </h3>
 
-                <div class="grid-form">
-                    <div class="field-box">
-                        <label>Model Name</label>
-                        <input type="text" id="mName">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Model Name</label>
+                        <input type="text" id="mName" class="border border-slate-200 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none bg-slate-50">
                     </div>
 
-                    <div class="field-box">
-                        <label>MRP Price</label>
-                        <input type="number" id="mPrice">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">MRP Price</label>
+                        <input type="number" id="mPrice" class="border border-slate-200 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none bg-slate-50">
                     </div>
 
-                    <div class="field-box">
-                        <label>Cash Insurance</label>
-                        <input type="number" id="mNormalIns">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cash Insurance</label>
+                        <input type="number" id="mNormalIns" class="border border-slate-200 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none bg-slate-50">
                     </div>
 
-                    <div class="field-box">
-                        <label>Finance Insurance</label>
-                        <input type="number" id="mFinanceIns">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Finance Insurance</label>
+                        <input type="number" id="mFinanceIns" class="border border-slate-200 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none bg-slate-50">
                     </div>
 
-                    <div class="field-box full-width">
-                        <label>Image URL</label>
-                        <input type="text" id="mImg">
+                    <div class="flex flex-col gap-1 md:col-span-2 lg:col-span-4">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Image URL</label>
+                        <input type="text" id="mImg" class="border border-slate-200 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none bg-slate-50">
                     </div>
                 </div>
 
-                <button id="saveModelBtn" class="btn-save" style="background:var(--primary)">
+                <button id="saveModelBtn" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">
                     Save to Master List
                 </button>
             </div>
 
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa fa-list text-indigo-500"></i> Master Price List
+                    </h3>
+                </div>
 
-            <div class="card table-card" style="margin-top:20px;">
-                <h3><i class="fa fa-list"></i> Master Price List</h3>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th>Model</th>
-                            <th>Price</th>
-                            <th>Insurance</th>
-                            <th>Finance Insurance</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="masterTableBody"></tbody>
-                </table>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold tracking-widest border-b border-slate-200">
+                                <th class="px-6 py-4">Image</th>
+                                <th class="px-6 py-4">Model</th>
+                                <th class="px-6 py-4">Price</th>
+                                <th class="px-6 py-4">Insurance</th>
+                                <th class="px-6 py-4">Finance Ins.</th>
+                                <th class="px-6 py-4 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="masterTableBody" class="divide-y divide-slate-100 text-sm text-slate-600">
+                            </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
 
-        <!-- STOCK TAB -->
-        <div id="tab-stock" class="tab-pane">
+        <div id="tab-stock" class="tab-pane hidden space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                    <i class="fa fa-plus-circle text-emerald-500"></i> Add Bike to Stock
+                </h3>
 
-            <div class="card">
-                <h3><i class="fa fa-plus-circle"></i> Add Bike to Stock</h3>
-
-                <div class="grid-form">
-                    <div class="field-box">
-                        <label>Select Model</label>
-                        <select id="stockModelSelect"></select>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Select Model</label>
+                        <select id="stockModelSelect" class="border border-slate-200 rounded-lg p-2.5 bg-slate-50 outline-none focus:ring-2 focus:ring-emerald-500"></select>
                     </div>
-
-                    <div class="field-box">
-                        <label>Registration No</label>
-                        <input type="text" id="sRegNo">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Registration No</label>
+                        <input type="text" id="sRegNo" class="border border-slate-200 rounded-lg p-2.5 bg-slate-50 outline-none focus:ring-2 focus:ring-emerald-500">
                     </div>
-
-                    <div class="field-box">
-                        <label>Chassis No</label>
-                        <input type="text" id="sChassis">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Chassis No</label>
+                        <input type="text" id="sChassis" class="border border-slate-200 rounded-lg p-2.5 bg-slate-50 outline-none focus:ring-2 focus:ring-emerald-500">
                     </div>
-
-                    <div class="field-box">
-                        <label>Engine No</label>
-                        <input type="text" id="sEngine">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Engine No</label>
+                        <input type="text" id="sEngine" class="border border-slate-200 rounded-lg p-2.5 bg-slate-50 outline-none focus:ring-2 focus:ring-emerald-500">
                     </div>
-
-                    <div class="field-box">
-                        <label>Color</label>
-                        <input type="text" id="sColor">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Color</label>
+                        <input type="text" id="sColor" class="border border-slate-200 rounded-lg p-2.5 bg-slate-50 outline-none focus:ring-2 focus:ring-emerald-500">
                     </div>
                 </div>
 
-                <button id="saveStockBtn" class="btn-save" style="background:var(--success)">
+                <button id="saveStockBtn" class="mt-8 bg-emerald-600 text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-emerald-100 hover:bg-emerald-700 transition-all">
                     Add Stock
                 </button>
             </div>
 
-
-            <div class="card table-card" style="margin-top:20px;">
-                <h3><i class="fa fa-warehouse"></i> Live Stock</h3>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th>Price</th>
-                            <th>Chassis</th>
-                            <th>Engine</th>
-                            <th>Registration</th>
-                            <th>Color</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="stockTableBody"></tbody>
-                </table>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa fa-warehouse text-emerald-500"></i> Live Stock
+                    </h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold tracking-widest border-b border-slate-200">
+                                <th class="px-6 py-4">Model</th>
+                                <th class="px-6 py-4">Price</th>
+                                <th class="px-6 py-4">Chassis</th>
+                                <th class="px-6 py-4">Engine</th>
+                                <th class="px-6 py-4">Reg No.</th>
+                                <th class="px-6 py-4">Color</th>
+                                <th class="px-6 py-4 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stockTableBody" class="divide-y divide-slate-100 text-sm text-slate-600"></tbody>
+                    </table>
+                </div>
             </div>
-
         </div>
 
     </main>
 </section>
 
-
-<script type="module" src="script.js"></script>
+<script type="module" src="login.js"></script>
 
 <script>
-function switchTab(id) {
-    document.querySelectorAll('.tab-pane').forEach(tab => {
-        tab.classList.remove('active');
+function switchTab(btn, id) {
+    // Hide all panes
+    document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.add('hidden'));
+    
+    // Deactivate all buttons
+    document.querySelectorAll('.nav-item').forEach(nav => {
+        nav.classList.remove('tab-active', 'text-indigo-600');
+        nav.classList.add('text-slate-500', 'font-medium');
     });
 
-    document.querySelectorAll('.nav-item').forEach(btn => {
-        btn.classList.remove('active');
-    });
+    // Show selected pane
+    document.getElementById(id).classList.remove('hidden');
 
-    document.getElementById(id).classList.add('active');
-
-    event.target.classList.add('active');
+    // Activate selected button
+    btn.classList.add('tab-active', 'text-indigo-600');
+    btn.classList.remove('text-slate-500', 'font-medium');
 }
 </script>
 
