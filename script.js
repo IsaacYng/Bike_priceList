@@ -29,7 +29,6 @@ async function fetchBikes() {
                 `<option value="${bike.id}" ${bike.name.includes("Pulsar 150 SD BS VI") ? "selected" : ""}>${bike.name}</option>`
             ).join('');
 
-            // सुरुमै हिसाब देखाउनको लागि
             calculateFinance();
         }
     } catch (e) {
@@ -44,7 +43,6 @@ window.calculateFinance = function() {
 
     if (!bike) return;
 
-    // --- डाटाहरू नम्बरमा बदल्ने ---
     const mrp = parseFloat(bike.price) || 0;
     const insurance = parseFloat(bike.Insurance) || 0;
     const discount = parseFloat(document.getElementById('discountInput').value) || 0;
@@ -64,7 +62,6 @@ window.calculateFinance = function() {
     const dpAmountOnly = afterDiscount * (dpPercentVal / 100);
     const loanAmount = afterDiscount - dpAmountOnly;
 
-    // डाउनपेमेन्ट अनुसार ब्याज दर (Interest Rate)
     let rate = 13.99;
     if (dpPercentVal >= 60) rate = 9.99;
     else if (dpPercentVal >= 50) rate = 11.99;
@@ -72,14 +69,15 @@ window.calculateFinance = function() {
 
     const monthlyRate = (rate / 12) / 100;
     
-    // यहाँ EMI लाई Math.ceil प्रयोग गरेर सिधै राउन्ड अप गरिएको छ (उदा: १२३.०१ -> १२४)
+    // EMI निकाल्ने
     const rawEmi = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, tenure)) / (Math.pow(1 + monthlyRate, tenure) - 1);
+    
+    // यहाँ हामीले Math.ceil प्रयोग गर्छौं ताकि १२३.०१ छ भने १२४ बनोस्
     const emi = Math.ceil(rawEmi);
 
     // --- २. "Total Downpayment" को राउन्डिङ लजिक ---
     const rawTotalDownpayment = dpAmountOnly + namsari + insurance + emi + accCost + customerExtraAdv;
 
-    // अर्को १००० को राउन्ड फिगर बनाउन (उदा: १२३४५६ -> १२४०००)
     const lastThreeDigits = Math.ceil(rawTotalDownpayment) % 1000;
     const autoRounding = lastThreeDigits > 0 ? (1000 - lastThreeDigits) : 0;
 
@@ -91,38 +89,33 @@ window.calculateFinance = function() {
 
     // --- ४. स्क्रिनमा नतिजा देखाउने (UI Update) ---
 
-    // माथिको मुख्य Total Downpayment
+    // Total Downpayment (Main Display)
     document.getElementById('displayTotalDP').innerText = `RS. ${finalTotalDP.toLocaleString()}`;
 
-    // बाइकको जानकारी
     document.getElementById('mrp').innerText = `RS. ${mrp.toLocaleString()}`;
     document.getElementById('afterDiscount').innerText = `RS. ${afterDiscount.toLocaleString()}`;
     document.getElementById('displayIns').innerText = `RS. ${insurance.toLocaleString()}`;
 
-    // क्यालकुलेसन समरी (Results)
     document.getElementById('displayRate').innerText = `${rate}%`;
     document.getElementById('displayDpAmt').innerText = `RS. ${Math.round(dpAmountOnly).toLocaleString()}`;
     document.getElementById('displayLoanAmt').innerText = `RS. ${Math.round(loanAmount).toLocaleString()}`;
 
-    // EMI (अहिले यो सिधै राउन्ड अप भएको सिङ्गो नम्बरमा आउँछ)
-    document.getElementById('displayEMI').innerText = `RS. ${emi.toLocaleString()}`;
+    // EMI डिस्प्ले - यहाँ .toFixed(2) प्रयोग गरिएको छ ताकि पोइन्टमा देखियोस्
+    // तर भ्यालु चाहिँ राउन्ड अप भएकै (Math.ceil) वाला जान्छ
+    document.getElementById('displayEMI').innerText = `RS. ${emi.toFixed(2)}`;
 
-    // राउन्डिङ र एडभान्स विवरण
     document.getElementById('displayAutoAdEmi').innerText = `RS. ${autoRounding.toLocaleString()}`;
     document.getElementById('displayTotalAdvEmi').innerText = `RS. ${Math.round(totalAdvEmiIncludingAdjustment).toLocaleString()}`;
     document.getElementById('displayDueEmi').innerText = `RS. ${Math.round(totalRemainingToPay).toLocaleString()}`;
 
-    // जम्मा ब्याज
     const totalInterest = (emi * tenure) - loanAmount;
     document.getElementById('displayTotalInterest').innerText = `RS. ${Math.round(totalInterest).toLocaleString()}`;
 };
 
-// ४. Event Listeners: केही कुरा फेरिने बित्तिकै हिसाब अपडेट गर्ने
 document.addEventListener('input', (e) => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
         calculateFinance();
     }
 });
 
-// सुरुमा बाइकहरू लोड गर्ने
 fetchBikes();
