@@ -47,8 +47,9 @@ function renderBikes(bikes) {
                     
                     <div class="mt-4 pt-4 border-t border-gray-100">
                         <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">MRP Price</span>
-                        <div class="text-2xl font-black text-black-600">
-                            Rs. ${parseFloat(bike.price).toLocaleString()}
+                        <div class="text-2xl font-black text-slate-900">
+    Rs. ${parseFloat(bike.price).toLocaleString()}
+</div>
                         </div>
                     </div>
                 </div>
