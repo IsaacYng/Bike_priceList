@@ -3,26 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Go! YNG</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="favicon.png" type="image/png">
+    <title>Bajaj Phidim | Official Price List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Smooth Pre-loader Styles */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+        .loader-ring {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #dc2626; /* Bajaj Red */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
 </head>
-<body>
-    <section class="intro-section">
-        <div class="main_containor">
-            <img src="favicon.png" alt="logo" class="logo-img">
-            <div class="brand-text">
-                <span class="title_1">Go!</span>
-                <span class="title_2">YNG</span>
-            </div>
-            <div class="greeting-box">
-                <p id="dynamic-greeting">Namaste!</p>
-            </div>
-            <div class="progress-container">
-                <progress id="login-progress" value="0" max="100"></progress>
-            </div>
+<body class="bg-gray-50">
+
+    <div id="preloader">
+        <div class="loader-ring"></div>
+        <p class="mt-4 font-bold text-gray-500 uppercase tracking-widest text-xs">Loading Showroom...</p>
+    </div>
+
+    <nav class="bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <span class="text-2xl font-black text-red-600">BAJAJ</span>
+            <button id="menu-btn" class="p-2 text-xl"><i class="fa-solid fa-bars-staggered"></i></button>
         </div>
-    </section>
-    <script src="script.js"></script>
+    </nav>
+
+    <header class="bg-slate-900 py-20 px-4 text-center text-white">
+        <h1 class="text-4xl md:text-6xl font-extrabold">Phidim Showroom</h1>
+        <p class="mt-4 text-slate-400">Official Price List & Specifications</p>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <div id="price-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBppvBJjKGUv7_n-l_yU2DHTlv-KRZioaI",
+            authDomain: "bike-pricelist.firebaseapp.com",
+            projectId: "bike-pricelist",
+            storageBucket: "bike-pricelist.firebasestorage.app",
+            messagingSenderId: "974924440062",
+            appId: "1:974924440062:web:1980ccb2b0338dd48460af"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function init() {
+            const container = document.getElementById('price-list-container');
+            const preloader = document.getElementById('preloader');
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "bikes"));
+                let html = '';
+
+                querySnapshot.forEach((doc) => {
+                    const bike = doc.data();
+                    html += `
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <h3 class="text-xl font-bold">${bike.model}</h3>
+                            <p class="text-2xl text-red-600 font-black mt-2">Rs. ${bike.price}</p>
+                            <div class="mt-4 flex justify-between text-sm text-gray-500 border-t pt-4">
+                                <span><i class="fa-solid fa-bolt mr-1"></i> ${bike.engine}</span>
+                                <span class="text-green-600 font-bold">${bike.stock}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html || "<p class='text-center col-span-full'>No data found.</p>";
+            } catch (e) {
+                console.error(e);
+            } finally {
+                // Hide preloader once data is loaded
+                preloader.classList.add('fade-out');
+            }
+        }
+
+        init();
+    </script>
 </body>
 </html>
