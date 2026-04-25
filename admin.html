@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | E Spurt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-gray-100 flex flex-col hidden md:flex">
+        <div class="p-6 flex items-center gap-3">
+            <div class="bg-[#FF8A3D] p-1.5 rounded-lg">
+                <i class="fas fa-shopping-cart text-white text-sm"></i>
+            </div>
+            <span class="text-xl font-bold text-gray-800">E Spurt</span>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-1">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 bg-orange-50 text-orange-600 rounded-xl font-medium">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a>
+            <a href="bikes.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-700 rounded-xl transition-all">
+                <i class="fas fa-bicycle"></i> Bike Inventory
+            </a>
+            <a href="users.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-700 rounded-xl transition-all">
+                <i class="fas fa-users"></i> Users
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-700 rounded-xl transition-all">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-100">
+            <button onclick="handleLogout()" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-xl transition-all">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-y-auto">
+        
+        <header class="bg-white border-b border-gray-100 px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+            <h2 class="text-xl font-bold text-gray-800">Overview</h2>
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block">
+                    <p class="text-sm font-semibold text-gray-800" id="adminEmail">Admin User</p>
+                    <p class="text-xs text-gray-400">Project Manager</p>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=FF8A3D&color=fff" class="w-10 h-10 rounded-full border-2 border-orange-100" alt="Profile">
+            </div>
+        </header>
+
+        <div class="p-8 space-y-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-[24px] shadow-sm border border-gray-50">
+                    <p class="text-gray-400 text-sm font-medium">Total Products</p>
+                    <h3 class="text-3xl font-bold text-gray-800 mt-1">1,284</h3>
+                    <span class="text-green-500 text-xs font-bold mt-2 inline-block">+12% from last month</span>
+                </div>
+                <div class="bg-white p-6 rounded-[24px] shadow-sm border border-gray-50">
+                    <p class="text-gray-400 text-sm font-medium">Active Sessions</p>
+                    <h3 class="text-3xl font-bold text-gray-800 mt-1">42</h3>
+                    <span class="text-orange-500 text-xs font-bold mt-2 inline-block">Real-time tracking</span>
+                </div>
+                <div class="bg-white p-6 rounded-[24px] shadow-sm border border-gray-50">
+                    <p class="text-gray-400 text-sm font-medium">System Status</p>
+                    <h3 class="text-3xl font-bold text-green-500 mt-1">Healthy</h3>
+                    <span class="text-gray-400 text-xs mt-2 inline-block">All modules operational</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-50">
+                <h3 class="text-lg font-bold text-gray-800 mb-6">Your Linked Projects</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <a href="abc.html" class="group p-6 border border-gray-100 rounded-2xl hover:border-orange-200 hover:bg-orange-50/30 transition-all">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800">Project ABC</h4>
+                        <p class="text-sm text-gray-400">Manage data management flows</p>
+                    </a>
+
+                    <a href="bikes.html" class="group p-6 border border-gray-100 rounded-2xl hover:border-orange-200 hover:bg-orange-50/30 transition-all">
+                        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-bicycle"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800">Bike Inventory</h4>
+                        <p class="text-sm text-gray-400">View and edit firestore collection</p>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXQW4khEovrBUtP5JpYFTUch_p5KT-8F8",
+            authDomain: "first-project-2082-12-26.firebaseapp.com",
+            projectId: "first-project-2082-12-26",
+            storageBucket: "first-project-2082-12-26.firebasestorage.app",
+            messagingSenderId: "545170954251",
+            appId: "1:545170954251:web:0d2f7905834af3b0be8f0e",
+            measurementId: "G-17X7R542YC"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // AUTH GUARD: If not logged in, redirect to login page
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('adminEmail').innerText = user.email;
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        // Logout Logic
+        window.handleLogout = () => {
+            signOut(auth).then(() => {
+                window.location.href = "login.html";
+            }).catch((error) => {
+                console.error("Logout Error:", error);
+            });
+        };
+    </script>
+</body>
+</html>
