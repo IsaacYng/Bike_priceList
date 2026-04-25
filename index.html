@@ -59,116 +59,165 @@
         </div>
     </section>
 
-        <main style="padding: 40px 5%; max-width: 1200px; margin: 0 auto;">
-        <div class="finance-header" style="text-align: center; margin-bottom: 50px;">
-            <h2 style="font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 800; color: #1e293b; letter-spacing: -0.02em; margin-bottom: 8px;">Plan Your Journey</h2>
-            <p style="color: #64748b; font-weight: 500; font-size: 1.1rem; margin-bottom: 24px;">Calculate the perfect plan for your new Bajaj.</p>
-
-            <div style="background: white; display: inline-block; padding: 30px clamp(20px, 8vw, 60px); border-radius: 30px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; width: 100%; max-width: 500px;">
-                <p style="text-transform: uppercase; letter-spacing: 0.2em; font-size: 10px; font-weight: 800; color: #94a3b8; margin-bottom: 10px;">Initial Downpayment</p>
-                <div class="total-dp" id="displayTotalDP" style="font-size: clamp(2.5rem, 8vw, 3.5rem); font-weight: 900; color: #215282; line-height: 1;">RS. 0</div>
-                <div style="height: 4px; width: 60px; background: #FFD700; margin: 20px auto 0; border-radius: 2px;"></div>
-            </div>
+<main class="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8 font-sans text-slate-900">
+    <div class="max-w-5xl mx-auto space-y-6">
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
+            <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Finance Calculations</h2>
+            <p class="text-slate-500 mt-1 font-medium uppercase text-xs tracking-widest">Total Downpayment</p>
+            <div id="displayTotalDP" class="text-4xl font-black text-indigo-600 mt-2">RS. 0</div>
         </div>
 
-        <div class="finance-grid" style="display: flex; flex-direction: column; gap: 30px;">
-            <style>
-                .finance-layout { display: grid; grid-template-columns: 1fr; gap: 30px; }
-                @media (min-width: 1024px) { .finance-layout { grid-template-columns: 1.8fr 1fr; } }
-            </style>
-
-            <div class="finance-layout">
-                <div class="calc-box" style="background: white; padding: clamp(20px, 5vw, 40px); border-radius: 32px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
-                    <h3 style="font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 25px; display: flex; align-items: center;">
-                        <i class="fa-solid fa-motorcycle" style="margin-right: 12px; color: #215282;"></i> Configuration
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-2 space-y-6">
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="flex items-center text-lg font-bold text-slate-700 mb-5">
+                        <i class="fa-solid fa-motorcycle mr-3 text-indigo-500"></i> Select Model
                     </h3>
-
-                    <select id="modelSelect" style="width: 100%; padding: 15px 20px; border-radius: 16px; border: 2px solid #f1f5f9; background: #f8fafc; font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-bottom: 25px; outline: none;">
+                    
+                    <select id="modelSelect" class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block p-3 mb-6 transition-all">
                         <option>Loading Bikes...</option>
                     </select>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-                        <div style="padding: 15px; background: #f8fafc; border-radius: 18px;">
-                            <label style="display: block; font-size: 9px; font-weight: 800; color: #94a3b8; text-transform: uppercase;">MRP Price</label>
-                            <p id="mrp" style="font-size: 1.2rem; font-weight: 800; color: #1e293b;">RS. 0</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-500 uppercase">MRP</label>
+                            <p id="mrp" class="text-lg font-semibold text-slate-800">RS. 0</p>
                         </div>
-                        <div style="padding: 15px; background: #f0fdf4; border-radius: 18px; border: 1px solid #dcfce7;">
-                            <label style="display: block; font-size: 9px; font-weight: 800; color: #166534; text-transform: uppercase;">Final Offer</label>
-                            <p id="afterDiscount" style="font-size: 1.2rem; font-weight: 800; color: #16a34a;">RS. 0</p>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-500 uppercase">Discount</label>
+                            <input type="number" id="discountInput" value="0" class="w-full bg-white border border-slate-300 rounded p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                         </div>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px;">
-                        <div class="input-group">
-                            <label style="display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 5px;">Discount</label>
-                            <input type="number" id="discountInput" value="0" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; font-weight: 600;">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-500 uppercase">After Discount</label>
+                            <p id="afterDiscount" class="text-lg font-semibold text-green-600">RS. 0</p>
                         </div>
-                        <div class="input-group">
-                            <label style="display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 5px;">Adv. EMI</label>
-                            <input type="number" id="advEmiInput" value="0" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; font-weight: 600;">
-                        </div>
-                        <div class="input-group">
-                            <label style="display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 5px;">DP %</label>
-                            <select id="dpPercent" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; background: white; font-weight: 600;">
-                                <option value="30">30%</option><option value="40">40%</option><option value="50" selected>50%</option><option value="60">60%</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label style="display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 5px;">Tenure</label>
-                            <select id="tenure" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; background: white; font-weight: 600;">
-                                <option value="12" selected>12m</option><option value="18">18m</option><option value="24">24m</option><option value="36">36m</option>
-                            </select>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-500 uppercase">Adv. EMI</label>
+                            <input type="number" id="advEmiInput" value="0" class="w-full bg-white border border-slate-300 rounded p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                         </div>
                     </div>
 
-                    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #f1f5f9;">
-
-                    <h3 style="font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 20px;">Additional Fees</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px;">
-                        <div style="text-align: center; border: 1px solid #f1f5f9; padding: 10px; border-radius: 12px;">
-                            <label style="display: block; font-size: 9px; color: #94a3b8; font-weight: 800;">INSURANCE</label>
-                            <span id="displayIns" style="font-weight: 800; font-size: 0.9rem;">0</span>
+                    <div class="grid grid-cols-2 gap-4 mt-8 pt-6 border-t border-slate-100">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Downpayment %</label>
+                            <select id="dpPercent" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm">
+                                <option value="30">30%</option>
+                                <option value="40">40%</option>
+                                <option value="50" selected>50%</option>
+                                <option value="60">60%</option>
+                            </select>
                         </div>
-                        <input type="number" id="namsariInput" value="3000" placeholder="Namsari" style="padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 0.8rem;">
-                        <input type="number" id="helmetInput" value="2500" placeholder="Helmet" style="padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 0.8rem;">
-                        <input type="number" id="legguardInput" value="1800" placeholder="Legguard" style="padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 0.8rem;">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Tenure (Months)</label>
+                            <select id="tenure" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm">
+                                <option value="12" selected>12 Months</option>
+                                <option value="18">18 Months</option>
+                                <option value="24">24 Months</option>
+                                <option value="36">36 Months</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <div class="results-box" style="background: #1e293b; padding: clamp(25px, 5vw, 40px); border-radius: 32px; color: white;">
-                    <h3 style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: #94a3b8; margin-bottom: 25px; border-bottom: 1px solid #334155; padding-bottom: 10px;">Calculation Summary</h3>
-
-                    <div style="margin-bottom: 25px;">
-                        <label style="display: block; font-size: 10px; color: #94a3b8; text-transform: uppercase;">Monthly EMI</label>
-                        <span id="displayEMI" style="font-size: 2.2rem; font-weight: 900; color: #FFD700;">RS. 0</span>
-                    </div>
-
-                    <div style="display: grid; gap: 15px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-                            <span style="color: #94a3b8;">Rate</span><span id="displayRate" style="color: #FFD700; font-weight: 700;">0%</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-                            <span style="color: #94a3b8;">Loan</span><span id="displayLoanAmt" style="font-weight: 700;">RS. 0</span>
-                        </div>
-
-                        <div style="background: rgba(255, 215, 0, 0.08); padding: 15px; border-radius: 15px; border: 1px solid rgba(255, 215, 0, 0.2); margin: 10px 0;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-weight: 800; font-size: 10px; color: #FFD700; text-transform: uppercase;">Total Adv. EMI</span>
-                                <span id="displayTotalAdvEmi" style="font-size: 1.1rem; font-weight: 900;">RS. 0</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="flex items-center text-lg font-bold text-slate-700 mb-4">
+                            <i class="fa-solid fa-gears mr-3 text-indigo-500"></i> Additional Charges
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <label class="text-sm text-slate-600">Insurance</label>
+                                <p id="displayIns" class="font-semibold">RS. 0</p>
+                            </div>
+                            <div class="flex justify-between items-center gap-4">
+                                <label class="text-sm text-slate-600">Namsari/Reg.</label>
+                                <input type="number" id="namsariInput" value="3000" class="w-24 text-right border-b border-slate-300 focus:border-indigo-500 outline-none text-sm p-1">
                             </div>
                         </div>
+                    </div>
 
-                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; padding-top: 10px; border-top: 1px solid #334155;">
-                            <span style="color: #64748b;">Remaining</span><span id="displayDueEmi" style="color: #94a3b8;">RS. 0</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
-                            <span style="color: #64748b;">Total Interest</span><span id="displayTotalInterest" style="color: #f87171;">RS. 0</span>
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="flex items-center text-lg font-bold text-slate-700 mb-4">
+                            <i class="fa-solid fa-helmet-safety mr-3 text-indigo-500"></i> Accessories
+                        </h3>
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Helmet</label>
+                                <input type="number" id="helmetInput" value="2500" class="w-full text-sm border-b border-slate-200 outline-none p-1">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Legguard</label>
+                                <input type="number" id="legguardInput" value="1800" class="w-full text-sm border-b border-slate-200 outline-none p-1">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Seatcover</label>
+                                <input type="number" id="seatcoverInput" value="650" class="w-full text-sm border-b border-slate-200 outline-none p-1">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Others</label>
+                                <input type="number" id="othersInput" value="0" class="w-full text-sm border-b border-slate-200 outline-none p-1">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="lg:col-span-1">
+                <div class="bg-slate-900 rounded-2xl shadow-xl p-6 text-white sticky top-6">
+                    <h3 class="flex items-center text-lg font-bold mb-6 text-indigo-300">
+                        <i class="fa-solid fa-calculator mr-3"></i> Results Summary
+                    </h3>
+
+                    <div class="space-y-4 text-sm">
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-slate-400">Interest Rate</span>
+                            <span id="displayRate" class="font-mono text-indigo-400">0%</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-slate-400">Downpayment Amt</span>
+                            <span id="displayDpAmt" class="font-semibold text-slate-200">RS. 0</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-slate-400">Loan Amount</span>
+                            <span id="displayLoanAmt" class="font-semibold text-slate-200">RS. 0</span>
+                        </div>
+
+                        <div class="bg-indigo-600 rounded-xl p-4 my-6 text-center shadow-inner">
+                            <label class="block text-[10px] uppercase tracking-widest font-bold text-indigo-200 mb-1">Monthly EMI</label>
+                            <span id="displayEMI" class="text-3xl font-black">RS. 0</span>
+                        </div>
+
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Auto Rounding Adj.</span>
+                            <span id="displayAutoAdEmi" class="text-blue-400 italic">RS. 0</span>
+                        </div>
+
+                        <div class="bg-slate-800 rounded-lg p-3 flex justify-between items-center">
+                            <span class="font-bold text-xs uppercase text-slate-400">Total Advance EMI</span>
+                            <span id="displayTotalAdvEmi" class="text-lg font-bold text-indigo-300">RS. 0</span>
+                        </div>
+
+                        <div class="space-y-2 pt-4">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400 italic">Due EMI (Remaining)</span>
+                                <span id="displayDueEmi" class="font-medium text-slate-300">RS. 0</span>
+                            </div>
+                            <div class="flex justify-between border-t border-slate-800 pt-2">
+                                <span class="text-slate-400 italic">Total Interest Pay</span>
+                                <span id="displayTotalInterest" class="font-medium text-red-400">RS. 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </main>
+    </div>
+</main>
+
 
 
     <footer class="bg-white border-t py-12">
