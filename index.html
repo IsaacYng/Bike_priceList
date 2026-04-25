@@ -12,6 +12,53 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
+<body class="bg-slate-50 text-slate-900">
+
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0">
+                    <span class="text-2xl font-black text-red-600 tracking-tighter">Go! YNG</span>
+                </div>
+
+                <div class="hidden md:flex space-x-8 font-semibold text-gray-600">
+                    <a href="#" class="hover:text-red-600">Home</a>
+                    <a href="#prices" class="hover:text-red-600">Price List</a>
+                    <a href="finance.html" class="hover:text-red-600">Finance</a>
+                </div>
+
+                <button id="menu-btn" class="md:hidden text-2xl p-2">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="overlay" class="fixed inset-0 bg-black/50 z-[60] hidden backdrop-blur-sm transition-opacity"></div>
+    <div id="drawer" class="fixed top-0 left-0 w-72 h-full bg-white z-[70] shadow-2xl transform -translate-x-full transition-transform duration-300">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-10">
+                <span class="font-bold text-xl uppercase tracking-widest text-red-600">Menu</span>
+                <button id="close-btn" class="text-3xl text-gray-400">&times;</button>
+            </div>
+            <div class="flex flex-col space-y-6 font-medium text-lg">
+                <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-red-50 hover:text-red-600 transition"><i class="fa-solid fa-house"></i> <span>Home</span></a>
+                <a href="#prices" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-red-50 hover:text-red-600 transition"><i class="fa-solid fa-motorcycle"></i> <span>Price List</span></a>
+                <a href="finance.html" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-red-50 hover:text-red-600 transition"><i class="fa-solid fa-phone"></i> <span>Finance</span></a>
+            </div>
+        </div>
+    </div>
+
+    <section class="relative bg-slate-900 text-white overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10"></div>
+        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=2070" class="absolute inset-0 w-full h-full object-cover opacity-50" alt="Bajaj Bike">
+        <div class="relative z-20 max-w-7xl mx-auto px-4 py-24 sm:py-32">
+            <h1 class="text-4xl md:text-7xl font-extrabold mb-6">Unleash the <br><span class="text-red-500">Thrill of Riding.</span></h1>
+            <p class="max-w-xl text-lg text-slate-300 mb-8">Browse the latest 2026 price list and find your perfect match. Authorized partner in Phidim.</p>
+            <a href="#prices" class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-bold transition inline-block">View Price List</a>
+        </div>
+    </section>
+
     <main style="padding: 40px 5%; max-width: 1200px; margin: 0 auto;">
         <div class="finance-header" style="text-align: center; margin-bottom: 50px;">
             <h2 style="font-size: 2.5rem; font-weight: 800; color: #1e293b; letter-spacing: -0.02em; margin-bottom: 8px;">Plan Your Journey</h2>
@@ -146,7 +193,6 @@
         </div>
     </main>
 
-    </main>
 
     <footer class="bg-white border-t py-12">
         <div class="max-w-7xl mx-auto px-4 text-center">
