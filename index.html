@@ -3,80 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bajaj Phidim | Official Prices</title>
+    <title>Finance Calculator | Go! YNG</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        #preloader { position: fixed; inset: 0; background: white; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; }
-        .loader { width: 48px; height: 48px; border: 5px solid #f3f3f3; border-bottom-color: #dc2626; border-radius: 50%; animation: rotation 1s linear infinite; }
-        @keyframes rotation { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }
-        .fade-out { opacity: 0; visibility: hidden; }
-    </style>
 </head>
-<body class="bg-slate-50">
+<body class="bg-slate-50 text-slate-900 font-sans">
 
-    <div id="preloader">
-        <div class="loader"></div>
-        <p class="mt-4 text-gray-400 font-bold text-xs uppercase tracking-widest">Loading Showroom...</p>
-    </div>
-
-    <nav class="bg-white border-b sticky top-0 z-50 h-16 flex items-center px-6 justify-between">
-        <span class="text-2xl font-black text-red-600">BAJAJ</span>
-        <a href="login.html" class="text-gray-400 hover:text-red-600 transition"><i class="fa-solid fa-user-lock"></i></a>
+    <nav class="bg-[#215282] sticky top-0 z-50 px-6 py-4 shadow-lg flex justify-between items-center">
+        <div class="text-2xl font-black text-white italic tracking-tighter">
+            <span class="text-[#FFD700]">Go!</span> YNG
+        </div>
+        <div class="flex space-x-6">
+            <a href="index.html" class="text-white hover:text-[#FFD700] font-medium transition-colors">Home</a>
+            <a href="index.html" class="text-[#FFD700] font-bold border-b-2 border-[#FFD700]">Price List</a>
+        </div>
     </nav>
 
-    <header class="bg-slate-900 text-white py-20 px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold">Phidim Price List</h1>
-        <p class="text-slate-400 mt-2">Check the latest Bajaj prices in real-time.</p>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-4 py-12">
-        <div id="price-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <main class="max-w-7xl mx-auto px-4 py-10">
+        
+        <div class="bg-white rounded-3xl p-8 mb-10 shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+                <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tight">Finance Calculator</h1>
+                <p class="text-slate-500 font-medium mt-1">Estimate your monthly installments instantly.</p>
             </div>
+            <div class="bg-slate-900 text-white p-6 rounded-2xl w-full md:w-auto text-center md:text-right">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total Downpayment</p>
+                <div class="text-3xl font-black text-[#FFD700]" id="displayTotalDP">RS. 0</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            
+            <div class="lg:col-span-2 space-y-8">
+                
+                <section class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                    <h3 class="text-lg font-bold mb-6 flex items-center text-slate-800">
+                        <i class="fa-solid fa-motorcycle mr-3 text-[#215282]"></i> Select Model
+                    </h3>
+                    <select id="modelSelect" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 px-5 focus:outline-none focus:border-[#215282] transition-all text-lg font-bold">
+                        <option>Loading Bikes...</option>
+                    </select>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div class="bg-slate-50 p-4 rounded-2xl">
+                            <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">MRP Price</label>
+                            <p class="text-xl font-bold text-slate-800" id="mrp">RS. 0</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl">
+                            <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">After Discount</label>
+                            <p class="text-xl font-bold text-green-600" id="afterDiscount">RS. 0</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-xs font-black text-slate-500 uppercase mb-3">Discount Amount</label>
+                        <input type="number" id="discountInput" value="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-[#215282]/10 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black text-slate-500 uppercase mb-3">Customer Adv. EMI</label>
+                        <input type="number" id="advEmiInput" value="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-[#215282]/10 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black text-slate-500 uppercase mb-3">Downpayment %</label>
+                        <select id="dpPercent" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4">
+                            <option value="30">30%</option>
+                            <option value="40">40%</option>
+                            <option value="50" selected>50%</option>
+                            <option value="60">60%</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black text-slate-500 uppercase mb-3">Tenure (Months)</label>
+                        <select id="tenure" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4">
+                            <option value="12" selected>12 Months</option>
+                            <option value="18">18 Months</option>
+                            <option value="24">24 Months</option>
+                            <option value="36">36 Months</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                    <h3 class="text-lg font-bold mb-6 flex items-center text-slate-800">
+                        <i class="fa-solid fa-gears mr-3 text-[#215282]"></i> Extra Charges & Accessories
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center">
+                        <div class="p-3 bg-slate-50 rounded-xl">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase">Insurance</label>
+                            <p class="font-bold text-slate-700" id="displayIns">0</p>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1 text-left">Namsari</label>
+                            <input type="number" id="namsariInput" value="3000" class="w-full p-2 border rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1 text-left">Helmet</label>
+                            <input type="number" id="helmetInput" value="2500" class="w-full p-2 border rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1 text-left">Legguard</label>
+                            <input type="number" id="legguardInput" value="1800" class="w-full p-2 border rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1 text-left">Others</label>
+                            <input type="number" id="othersInput" value="0" class="w-full p-2 border rounded-lg text-sm">
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="bg-slate-900 text-white rounded-[2rem] p-8 sticky top-24 shadow-2xl shadow-blue-900/20">
+                    <h3 class="text-xl font-bold mb-8 flex items-center">
+                        <i class="fa-solid fa-calculator mr-3 text-[#FFD700]"></i> Results Summary
+                    </h3>
+                    
+                    <div class="space-y-5">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-400 font-medium">Interest Rate</span>
+                            <span class="font-bold text-[#FFD700]" id="displayRate">0%</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-400 font-medium">Loan Amount</span>
+                            <span class="font-bold" id="displayLoanAmt">RS. 0</span>
+                        </div>
+                        
+                        <div class="bg-white/10 rounded-2xl p-6 my-6 border border-white/10 text-center">
+                            <p class="text-[10px] font-black text-[#FFD700] uppercase tracking-widest mb-1">Monthly EMI</p>
+                            <div class="text-4xl font-black" id="displayEMI">RS. 0</div>
+                        </div>
+
+                        <div class="space-y-4 border-t border-white/10 pt-6">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-400">Auto Rounding</span>
+                                <span class="text-blue-400 font-bold" id="displayAutoAdEmi">RS. 0</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-[#FFD700] text-slate-900 p-4 rounded-xl font-black">
+                                <span>TOTAL ADV. EMI</span>
+                                <span id="displayTotalAdvEmi">RS. 0</span>
+                            </div>
+                            <div class="flex justify-between text-xs pt-2">
+                                <span class="text-slate-400">Total Interest</span>
+                                <span class="text-red-400" id="displayTotalInterest">RS. 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <footer class="bg-slate-900 text-white pt-20 pb-10 px-6 mt-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div class="col-span-1 lg:col-span-2">
+                <h3 class="text-2xl font-black italic tracking-tighter mb-4"><span class="text-[#FFD700]">Go!</span> YNG</h3>
+                <p class="text-slate-400 max-w-sm mb-4">Authorized Bajaj Partner. Providing the best financial solutions for your dream ride in Phidim.</p>
+                <p class="text-xs text-slate-500 font-bold uppercase tracking-widest italic">"What A Drag..."</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-[#FFD700] mb-6 uppercase text-xs tracking-widest">Quick Links</h4>
+                <ul class="space-y-4 text-sm text-slate-300">
+                    <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                    <li><a href="index.html" class="hover:text-white transition">Price List</a></li>
+                    <li><a href="finance.html" class="hover:text-white transition">Finance Calculator</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-[#FFD700] mb-6 uppercase text-xs tracking-widest">Location</h4>
+                <p class="text-sm text-slate-300">📍 Phidim Bazar, Panchthar<br>Koshi Province, Nepal</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto border-t border-white/5 mt-16 pt-8 text-center text-xs text-slate-500">
+            &copy; 2026 Go! YNG | Designed for Bajaj Enthusiasts
+        </div>
+    </footer>
 
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyBppvBJjKGUv7_n-l_yU2DHTlv-KRZioaI",
-            authDomain: "bike-pricelist.firebaseapp.com",
-            projectId: "bike-pricelist",
-            storageBucket: "bike-pricelist.firebasestorage.app",
-            messagingSenderId: "974924440062",
-            appId: "1:974924440062:web:1980ccb2b0338dd48460af"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        async function fetchPrices() {
-            const container = document.getElementById('price-list-container');
-            const preloader = document.getElementById('preloader');
-            
-            try {
-                const snap = await getDocs(collection(db, "bikes"));
-                let html = '';
-                snap.forEach(doc => {
-                    const b = doc.data();
-                    html += `
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border hover:shadow-md transition">
-                            <h3 class="text-xl font-bold">${b.model}</h3>
-                            <p class="text-2xl text-red-600 font-black mt-1">Rs. ${b.price}</p>
-                            <p class="text-xs text-gray-400 mt-4 border-t pt-4 font-bold uppercase">${b.engine} | <span class="text-green-600">${b.stock}</span></p>
-                        </div>`;
-                });
-                container.innerHTML = html;
-            } catch (err) {
-                console.error(err);
-            } finally {
-                preloader.classList.add('fade-out');
-            }
-        }
-
-        fetchPrices();
-    </script>
+    <script type="module" src="finance.js"></script>
 </body>
 </html>
