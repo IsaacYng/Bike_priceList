@@ -59,41 +59,44 @@
     </section>
 
     <main id="prices" class="max-w-7xl mx-auto px-4 py-20">
-        <div class="mb-12 flex justify-between items-end">
-            <div>
-                <h2 class="text-3xl font-bold">Latest Models</h2>
-                <div class="h-1 w-20 bg-red-600 mt-2"></div>
-            </div>
-        </div>
-    <section id="Price_list" class="py-16 px-4 max-w-7xl mx-auto">
-    <div class="mb-10">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-800 relative inline-block">
-            Price List
-            <span class="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"></span>
+   <section id="Price_list" class="py-20 px-4 max-w-7xl mx-auto flex flex-col items-center">
+    
+    <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter mb-4">
+            FIND YOUR <span class="text-red-600">RIDE</span>
         </h2>
+        <p class="text-gray-500 font-medium max-w-sm mx-auto">
+            Discover the latest Bajaj prices updated in real-time.
+        </p>
     </div>
 
-    <div class="mb-12 relative max-w-md group">
-        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-red-500 transition-colors">
-            <i class="fa-solid fa-magnifying-glass"></i>
+    <div class="w-full max-w-xl relative group mb-16">
+        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+            <i class="fa-solid fa-magnifying-glass text-gray-400 group-focus-within:text-red-600 transition-colors"></i>
         </div>
         <input 
             type="text" 
             id="search-input" 
-            placeholder="Search bikes here..." 
-            class="w-full bg-white border border-gray-200 rounded-2xl py-4 pl-12 pr-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all placeholder:text-gray-400 text-slate-700"
+            placeholder="Type bike name (e.g. Pulsar NS)..." 
+            class="w-full bg-white border-2 border-gray-100 rounded-full py-5 pl-14 pr-6 shadow-xl shadow-slate-100 focus:outline-none focus:ring-4 focus:ring-red-500/10 focus:border-red-600 transition-all placeholder:text-gray-400 text-slate-700 text-lg"
         >
-    </div>
-
-    <div id="bike-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="col-span-full py-20 text-center">
-            <div class="inline-block animate-bounce mb-4 text-red-600">
-                <i class="fa-solid fa-database text-3xl"></i>
-            </div>
-            <p class="text-gray-500 font-medium tracking-wide animate-pulse">Connecting to database...</p>
+        <div class="absolute inset-y-2 right-2 hidden md:flex items-center pr-2">
+            <span class="bg-slate-50 text-slate-400 text-[10px] font-bold px-3 py-2 rounded-full border">PHIDIM BAJAJ</span>
         </div>
     </div>
-</section>
+
+    <div id="bike-container" class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="col-span-full py-20 text-center">
+            <div class="relative inline-block">
+                <div class="absolute inset-0 rounded-full bg-red-100 animate-ping opacity-25"></div>
+                <div class="relative bg-white p-6 rounded-full shadow-lg text-red-600">
+                    <i class="fa-solid fa-satellite-dish text-3xl"></i>
+                </div>
+            </div>
+            <p class="mt-6 text-slate-400 font-bold uppercase tracking-[0.3em] text-xs">Syncing Live Data</p>
+        </div>
+    </div>
+</section>  
 
           </div>
         </div>
