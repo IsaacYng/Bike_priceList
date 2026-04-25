@@ -19,7 +19,6 @@ let allBikes = [];
 
 function startApp() {
     onSnapshot(bikesCol, (snapshot) => {
-        // We take the data exactly as it is in the database
         allBikes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         renderBikes(allBikes); 
     });
@@ -29,27 +28,55 @@ function renderBikes(bikes) {
     let container = document.getElementById("bike-container");
     if (container) {
         if (bikes.length === 0) {
-            container.innerHTML = "<p class='col-span-full text-center py-10 text-gray-400'>No bikes found.</p>";
+            container.innerHTML = `
+                <div class="col-span-full text-center py-20">
+                    <i class="fa-solid fa-motorcycle text-gray-200 text-6xl mb-4"></i>
+                    <p class="text-gray-400">No bikes found in the showroom.</p>
+                </div>`;
             return;
         }
 
         container.innerHTML = bikes.map(bike => `
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300">
-                <div class="h-48 bg-slate-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-xl transition-all duration-500">
+                <div class="relative h-56 bg-gradient-to-b from-slate-50 to-white flex items-center justify-center p-6">
+                    <div class="absolute top-4 left-4 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-100 shadow-sm">
+                        <span class="text-[10px] font-bold text-red-600 uppercase tracking-widest"><i class="fa-solid fa-bolt mr-1"></i> New Model</span>
+                    </div>
                     <img src="${bike.img || 'https://cdn-icons-png.flaticon.com/512/8163/8163149.png'}" 
                          alt="${bike.name}" 
-                         class="h-full object-contain">
+                         class="h-full object-contain group-hover:scale-110 transition-transform duration-500">
                 </div>
                 
-                <div class="p-5">
-                    <h3 class="text-xl font-bold text-slate-800 uppercase tracking-tight">${bike.name}</h3>
-                    <p class="text-sm text-gray-500 mt-1">Insurance: Rs. ${bike.Insurance || '0'}</p>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-black text-slate-800 uppercase tracking-tight leading-tight">${bike.name}</h3>
+                        <i class="fa-solid fa-circle-check text-blue-500 text-lg"></i>
+                    </div>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center text-sm text-slate-500">
+                            <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-shield-halved text-blue-600"></i>
+                            </div>
+                            <span class="font-medium">Insurance: <span class="text-slate-900 font-bold">Rs. ${bike.Insurance || '0'}</span></span>
+                        </div>
+                        
+                        <div class="flex items-center text-sm text-slate-500">
+                            <div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-tag text-green-600"></i>
+                            </div>
+                            <span class="font-medium">Status: <span class="text-green-600 font-bold">Available Now</span></span>
+                        </div>
+                    </div>
                     
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">MRP Price</span>
-                        <div class="text-2xl font-black text-slate-900">
-    Rs. ${parseFloat(bike.price).toLocaleString()}
-</div>
+                    <div class="pt-5 border-t border-dashed border-gray-200">
+                        <div class="flex items-baseline justify-between">
+                            <span class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">MRP Total Price</span>
+                            <i class="fa-solid fa-receipt text-gray-300"></i>
+                        </div>
+                        <div class="text-3xl font-black text-slate-900 mt-1 flex items-center">
+                            <span class="text-lg mr-2 text-red-600">Rs.</span>
+                            ${parseFloat(bike.price).toLocaleString()}
                         </div>
                     </div>
                 </div>
