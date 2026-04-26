@@ -6,36 +6,71 @@
     <title>Go! YNG | Price List</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-      <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
+
+        /* --- A4 FORM SPECIFIC STYLES --- */
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; margin: 0; padding: 0; }
+            .a4-page {
+                box-shadow: none !important;
+                margin: 0 !important;
+                border: none !important;
+                width: 100%;
+            }
+            .scroller-container { overflow: visible !important; padding: 0 !important; }
+        }
+
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            background: white;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            color: #1a1a1a;
+        }
+
+        /* Enables horizontal scroll on mobile so the A4 doesn't squash */
+        .scroller-container {
+            overflow-x: auto;
+            width: 100%;
+            background-color: #f1f5f9; /* slate-100 */
+            padding: 1rem;
+        }
+
+        /* Precise alignment for the colons */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 240px 20px 1fr;
+            row-gap: 0.25rem;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
-    <nav class="bg-white border-b sticky top-0 z-50">
+    <nav class="bg-white border-b sticky top-0 z-50 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex-shrink-0">
                     <span class="text-2xl font-black text-red-600 tracking-tighter">Go! YNG</span>
                 </div>
-
                 <div class="hidden md:flex space-x-8 font-semibold text-gray-600">
                     <a href="#" class="hover:text-red-600">Home</a>
                     <a href="#prices" class="hover:text-red-600">Price List</a>
-                    <a href="finance.html" class="hover:text-red-600">Finance</a>
+                    <a href="finance.html" class="hover:text-red-600 text-red-600">Finance</a>
                 </div>
-
-                <button id="menu-btn" class="md:hidden text-2xl p-2">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                </button>
+                <button id="menu-btn" class="md:hidden text-2xl p-2"><i class="fa-solid fa-bars-staggered"></i></button>
             </div>
         </div>
     </nav>
 
-    <div id="overlay" class="fixed inset-0 bg-black/50 z-[60] hidden backdrop-blur-sm transition-opacity"></div>
-    <div id="drawer" class="fixed top-0 left-0 w-72 h-full bg-white z-[70] shadow-2xl transform -translate-x-full transition-transform duration-300">
+    <div id="overlay" class="fixed inset-0 bg-black/50 z-[60] hidden backdrop-blur-sm transition-opacity no-print"></div>
+    <div id="drawer" class="fixed top-0 left-0 w-72 h-full bg-white z-[70] shadow-2xl transform -translate-x-full transition-transform duration-300 no-print">
         <div class="p-6">
             <div class="flex justify-between items-center mb-10">
                 <span class="font-bold text-xl uppercase tracking-widest text-red-600">Menu</span>
@@ -44,80 +79,78 @@
             <div class="flex flex-col space-y-6 font-medium text-lg">
                 <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-red-50 hover:text-red-600 transition"><i class="fa-solid fa-house"></i> <span>Home</span></a>
                 <a href="#prices" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-red-50 hover:text-red-600 transition"><i class="fa-solid fa-motorcycle"></i> <span>Price List</span></a>
-                <a href="finance.html" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-red-50 hover:text-red-600 transition"><i class="fa-solid fa-chart-area"></i><span>Finance</span></a>
+                <a href="finance.html" class="flex items-center space-x-4 p-2 rounded-lg bg-red-50 text-red-600 transition"><i class="fa-solid fa-chart-area"></i><span>Finance</span></a>
             </div>
         </div>
     </div>
 
-    <section class="relative bg-slate-900 text-white overflow-hidden">
+    <section class="relative bg-slate-900 text-white overflow-hidden no-print">
         <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10"></div>
         <img src="https://live.staticflickr.com/65535/52360118963_33c8110f10_b.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50" alt="Bajaj Bike">
-        <div class="relative z-20 max-w-7xl mx-auto px-4 py-24 sm:py-32">
-            <h1 class="text-4xl md:text-7xl font-extrabold mb-6">Unleash the <br><span class="text-red-500">Thrill of Riding.</span></h1>
-            <p class="max-w-xl text-lg text-slate-300 mb-8">Browse the latest price list and find your perfect match. Authorized partner in Phidim.</p>
-            <a href="#prices" class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-bold transition inline-block">View Price List</a>
+        <div class="relative z-20 max-w-7xl mx-auto px-4 py-20 sm:py-24">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">Downpayment <br><span class="text-red-500">Allocation.</span></h1>
+            <p class="max-w-xl text-lg text-slate-300 mb-8">Generate and print your official hire purchase documentation below.</p>
         </div>
     </section>
 
-    <main class="flex-grow scroller-container">
-        <div class="a4-page mx-auto">
-            
-            <div class="text-center mb-8">
+    <main class="scroller-container">
+        <div class="max-w-[210mm] mx-auto flex justify-end mb-4 no-print">
+            <button onclick="window.print()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-bold shadow-lg flex items-center gap-2 transition transform hover:scale-105">
+                <i class="fa-solid fa-file-pdf"></i> Generate PDF / Print
+            </button>
+        </div>
+
+        <div class="a4-page font-serif">
+            <div class="text-center mb-10">
                 <h2 class="text-xl font-bold tracking-widest uppercase">HULAS FINSERV HIRE PURCHASE LIMITED</h2>
                 <h3 class="text-lg font-semibold mt-1 underline decoration-1 underline-offset-4">DOWNPAYMENT ALLOCATION FORM</h3>
             </div>
 
-            <hr class="border-black mb-6">
+            <hr class="border-black mb-8">
 
-            <section class="mb-8">
-                <h4 class="font-bold mb-3">Customer & Vehicle Information</h4>
-                <div class="grid grid-cols-[180px_20px_1fr] gap-y-1">
+            <section class="mb-10">
+                <h4 class="font-bold mb-4 border-l-4 border-black pl-2">Customer & Vehicle Information</h4>
+                <div class="form-grid">
                     <div>• Date</div> <div>:</div> <div class="font-medium">13/04/2026</div>
                     <div>• Dealer Name</div> <div>:</div> <div class="font-medium">Samriddhi And Brothers Auto Pvt. Ltd.</div>
                     <div>• Customer Name</div> <div>:</div> <div class="font-medium">Your Name</div>
                     <div>• Contact Number</div> <div>:</div> <div class="font-medium">9800000000</div>
-                    <div>• Vehicle Model</div> <div>:</div> <div class="font-medium font-sans font-bold">Pul 220 F ABS FI BS VI</div>
+                    <div>• Vehicle Model</div> <div>:</div> <div class="font-medium font-sans font-bold uppercase tracking-tight">Pul 220 F ABS FI BS VI</div>
                 </div>
             </section>
 
-            <section class="mb-10">
-                <h4 class="font-bold mb-3">Financial Details</h4>
-                <div class="grid grid-cols-[250px_20px_1fr] gap-y-1">
+            <section class="mb-12">
+                <h4 class="font-bold mb-4 border-l-4 border-black pl-2">Financial Details</h4>
+                <div class="form-grid">
                     <div>• Retail Price</div> <div>:</div> <div>446,000.00</div>
                     <div>• Down Payment</div> <div>:</div> <div>223,000.00</div>
                     <div>• Loan Amount</div> <div>:</div> <div>223,000.00</div>
                     <div>• Interest Rate (%)</div> <div>:</div> <div>11.99</div>
                     <div>• Tenure (Months)</div> <div>:</div> <div>36</div>
-                    <div>• Registration Charge / Yatayat</div> <div>:</div> <div>3,000.00 <span class="italic text-sm ml-2">(suggested by HH)</span></div>
+                    <div>• Registration Charge / Yatayat</div> <div>:</div> <div>3,000.00 <span class="italic text-sm text-gray-600 ml-2">(suggested by HH)</span></div>
                     <div>• Insurance Premium</div> <div>:</div> <div>9,436.00</div>
                     <div>• Advance EMI (If Any)</div> <div>:</div> <div>7,994.00</div>
-                    <div class="font-bold mt-2">• Total Down-payment Amount</div> <div class="mt-2 font-bold">:</div> <div class="mt-2 font-bold">243,430.00</div>
+                    <div class="font-bold mt-4 text-lg">• Total Down-payment Paid</div> <div class="mt-4 text-lg font-bold">:</div> <div class="mt-4 text-lg font-bold">243,430.00</div>
                 </div>
             </section>
 
-            <section class="mb-16">
-                <h4 class="font-bold border-b border-black pb-1 mb-3">Declaration</h4>
-                <p class="text-sm leading-relaxed">
-                    We confirm that the information provided above is accurate, and we acknowledge and agree to the specified amounts and breakdown of the down payment.
+            <section class="mb-20">
+                <h4 class="font-bold border-b border-black pb-1 mb-4">Declaration</h4>
+                <p class="text-sm leading-relaxed text-justify">
+                    We confirm that the information provided above is accurate, and we acknowledge and agree to the specified amounts and breakdown of the down payment as per the company's hire purchase policies.
                 </p>
-                <p class="mt-6 text-sm font-semibold italic">Signatures & Authorization</p>
+                <p class="mt-8 text-sm font-semibold italic">Signatures & Authorization</p>
             </section>
 
-            <section class="grid grid-cols-3 gap-8 mt-24 text-center">
+            <section class="grid grid-cols-3 gap-8 mt-32 text-center text-[10px] font-sans font-bold uppercase">
                 <div class="border-t border-black pt-2">Customer's Signature</div>
                 <div class="border-t border-black pt-2">Dealer's Signature & Stamp</div>
                 <div class="border-t border-black pt-2">LO's Signature & Stamp</div>
             </section>
-
-            <div class="mt-20 border-b border-black"></div>
-            <div class="mt-20 border-b border-black"></div>
-
         </div>
     </main>
 
-
-
-    <footer class="bg-white border-t py-12">
+    <footer class="bg-white border-t py-12 no-print">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <p class="text-gray-500 mb-6">Authorized Bajaj Showroom &copy; 2026</p>
             <div class="flex justify-center space-x-8 text-2xl text-gray-400">
@@ -128,10 +161,7 @@
         </div>
     </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
+    <script>
         // Drawer Controls
         const btn = document.getElementById('menu-btn');
         const close = document.getElementById('close-btn');
@@ -146,12 +176,6 @@
         btn.addEventListener('click', toggle);
         close.addEventListener('click', toggle);
         overlay.addEventListener('click', toggle);
-    </script>
-    <script type="module" src="script.js"></script>
-<script>
-        // Optional: Function to trigger download if using a library like html2pdf
-        // For now, the Print button allows "Save as PDF" which is most accurate.
-        console.log("Form Loaded Successfully");
     </script>
 </body>
 </html>
