@@ -62,14 +62,14 @@ window.calculateFinance = function() {
     else if (dpPercentVal >= 40) rate = 12.99;
 
     const monthlyRate = (rate / 12) / 100;
-    
+
     const emi = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, tenure)) / (Math.pow(1 + monthlyRate, tenure) - 1);
 
     const rawTotalDownpayment = dpAmountOnly + namsari + insurance + emi + accCost + customerExtraAdv;
-  
+
     const lastThreeDigits = rawTotalDownpayment % 1000;
     const autoRounding = lastThreeDigits > 0 ? (1000 - lastThreeDigits) : 0;
-  
+
     const finalTotalDP = rawTotalDownpayment + autoRounding;
 
     const totalAdvEmi = emi + autoRounding + customerExtraAdv;
