@@ -100,3 +100,22 @@ document.addEventListener('input', (e) => {
 });
 
 fetchBikes();
+// Example sync logic for script.js
+const inputs = ['custNameInput', 'custPhoneInput', 'modelSelect', 'discountInput'];
+
+inputs.forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+        // Sync Name
+        document.getElementById('a4CustName').innerText = document.getElementById('custNameInput').value || "---";
+        
+        // Sync Phone
+        document.getElementById('a4CustPhone').innerText = document.getElementById('custPhoneInput').value || "---";
+        
+        // Sync Model (get text from selected option)
+        const model = document.getElementById('modelSelect');
+        document.getElementById('a4Model').innerText = model.options[model.selectedIndex].text;
+
+        // Trigger your math function here...
+        calculateFinance(); 
+    });
+});
