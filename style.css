@@ -1,71 +1,7 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-body {
-    background: #f8fafc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.main_containor {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.logo-img {
-    height: 10vh;
-    animation: pulse 2s infinite;
-}
-
-.title_1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #1e293b;
-}
-
-.title_2 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #2563eb;
-}
-
-#dynamic-greeting {
-    font-size: 1.1rem;
-    color: #64748b;
-    margin-bottom: 10px;
-}
-progress {
-    width: 200px;
-    height: 8px;
-    border-radius: 10px;
-}
-
-progress::-webkit-progress-bar {
-    background-color: #e2e8f0;
-    border-radius: 10px;
-}
-
-progress::-webkit-progress-value {
-    background-color: #2563eb;
-    border-radius: 10px;
-    transition: width 0.3s ease;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.05); opacity: 0.8; }
-}
-
-.fade-out {
-    opacity: 0;
-    transition: opacity 0.8s ease;
+@media print {
+    nav, section, .no-print, button, footer, #finance > div:not(.bg-gray-200) {
+        display: none !important;
+    }
+    .bg-gray-200 { background: white !important; padding: 0 !important; }
+    .a4-page { box-shadow: none !important; margin: 0 !important; border: none !important; }
 }
