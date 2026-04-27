@@ -45,6 +45,48 @@
             display: grid; grid-template-columns: 240px 20px 1fr;
             row-gap: 6px; font-size: 14px;
         }
+
+    @media print {
+        /* 1. Hide everything except the A4 Page */
+        body * {
+            visibility: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 2. Target the specific A4 container and its children */
+        .a4-page, .a4-page * {
+            visibility: visible;
+        }
+
+        /* 3. Reset the position so it starts at the very top-left of the paper */
+        .a4-page {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 210mm;
+            height: 296mm; /* Slightly less than 297 to avoid spilling to page 2 */
+            padding: 15mm !important;
+            margin: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+            background: white !important;
+            page-break-after: avoid;
+            page-break-before: avoid;
+        }
+
+        /* 4. Ensure no extra margins from the browser settings */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        /* 5. Hide the scrollbar container background */
+        .overflow-x-auto, .bg-gray-200 {
+            background: none !important;
+            padding: 0 !important;
+        }
+    }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
